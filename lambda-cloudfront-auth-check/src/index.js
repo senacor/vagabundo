@@ -1,28 +1,33 @@
 'use strict';
 const AWS = require('aws-sdk');
 
+var apiVersion = '2014-06-30';
+var targetRegion = 'eu-central-1';
+var identityPoolId = 'eu-central-1:ecde0e66-17f1-4206-8b20-30fb4b5acd11'; // [region:GUID]
+var identityId = 'eu-central-1:4cf6185c-f929-4fa7-98c6-cfefab3c70d9'; // [region:GUID]
+var authRoleArn = 'arn:aws:iam::604370441254:role/Cognito_vagabundo_identitiesAuth_Role'; // [ARN]
+var loginRedirectUrl = 'https://vagabundo.auth.eu-central-1.amazoncognito.com/login?response_type=token&client_id=6fofh67mv67uq7ud0ms6jau4h2&redirect_uri=https://d3gvc5fnyopyis.cloudfront.net';
+
 exports.handler = (event, context, callback) => {
-    AWS.config.apiVersions = {
-        cognitoidentity: '2014-06-30',
-        // other service API versions
-    };
-    // Amazon Cognito-Anmeldeinformationenanbieter initialisieren
-    AWS.config.region = 'eu-central-1'; // Region
 
     console.log("Event: ", event);
     console.log("Context: ", context);
-
+    
+    AWS.config.apiVersions = {
+        cognitoidentity: apiVersion,
+        // other service API versions
+    };
+    // Amazon Cognito-Anmeldeinformationenanbieter initialisieren
+    AWS.config.region = targetRegion;
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-        IdentityPoolId: 'eu-central-1:ecde0e66-17f1-4206-8b20-30fb4b5acd11',
+        IdentityPoolId: identityPoolId,
     });
 
-
     var params = {
-        IdentityPoolId: 'eu-central-1:ecde0e66-17f1-4206-8b20-30fb4b5acd11' /* required */
+        IdentityPoolId: identityPoolId
     };
 
     var cognitoidentity = new AWS.CognitoIdentity();
-
     cognitoidentity.getIdentityPoolRoles(params, function(err, data) {
         if (err) {
             console.log(err, err.stack); // an error occurred
@@ -32,12 +37,10 @@ exports.handler = (event, context, callback) => {
             console.log(data);           // successful response
         }
     });
-
-
-
+    
     var params = {
-        IdentityId: 'eu-central-1:4cf6185c-f929-4fa7-98c6-cfefab3c70d9', /* required */
-        CustomRoleArn: 'arn:aws:iam::604370441254:role/Cognito_vagabundo_identitiesAuth_Role',
+        IdentityId: identityId, /* required */
+        CustomRoleArn: authRoleArn,
         Logins: {
             'AzureADTest': 'AZUREAD'
         }
@@ -58,7 +61,7 @@ exports.handler = (event, context, callback) => {
             headers: {
                 'location': [{
                     key: 'Location',
-                    value: "https://vagabundo.auth.eu-central-1.amazoncognito.com/login?response_type=token&client_id=6fofh67mv67uq7ud0ms6jau4h2&redirect_uri=https://d3gvc5fnyopyis.cloudfront.net"
+                    value: loginRedirectUrl
                 }]
             }
         };
