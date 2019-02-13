@@ -1,6 +1,9 @@
 Setup for the cloudfront auth check:
 
-AWS-Role
+AWS-Region:
+ only supported in `us-east-1`
+ 
+AWS-Role:
 * needs permissions for lambda-edge-executor:
   * Berechtigungsrichtlinie
     ```
