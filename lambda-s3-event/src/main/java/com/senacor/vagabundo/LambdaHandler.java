@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 /**
- * Handler class to recieve the S3 Event
+ * Handler class to recieve the S3 event and save the object
  */
 
 @SuppressWarnings("unused")
@@ -40,7 +40,7 @@ public class LambdaHandler implements RequestHandler<S3Event, Void> {
             context.getLogger().log("Name of file: " + record.getS3().getObject().getKey());
 
             s3Client.getObject(GetObjectRequest.builder().bucket(bucketName).key(fileName).build(),
-                    ResponseTransformer.toFile(Paths.get("multiPartKey")));
+                    ResponseTransformer.toFile(Paths.get(fileName)));
 
         } catch (Exception e) {
             context.getLogger().log("ERROR");
@@ -50,11 +50,11 @@ public class LambdaHandler implements RequestHandler<S3Event, Void> {
         return null;
     }
 
-    private void readFile(String filename) {
+    private void readFile(String fileName) {
         ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource(filename).getFile());
+        File file = new File(classLoader.getResource(fileName).getFile());
 
-        FileInputStream fis = null;
+        FileInputStream fis;
 
         try {
             fis = new FileInputStream(file);
