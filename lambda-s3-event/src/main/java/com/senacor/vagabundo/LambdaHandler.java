@@ -4,31 +4,24 @@ import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.S3Event;
 import com.amazonaws.services.s3.event.S3EventNotification;
-
-import software.amazon.awssdk.core.sync.ResponseTransformer;
-import software.amazon.awssdk.regions.Region;
-import software.amazon.awssdk.services.s3.S3Client;
-import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import com.amazonaws.services.s3.transfer.Download;
+import com.amazonaws.services.s3.transfer.TransferManager;
+import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.file.Paths;
 
 /**
- * Handler class to recieve the S3 event and save the object
+ * Handler class to receive the S3 event and save the object
  */
 
 @SuppressWarnings("unused")
 public class LambdaHandler implements RequestHandler<S3Event, Void> {
-    private static S3Client s3Client;
-    private Context context = null;
+    private static final Logger logger = LogManager.getLogger(LambdaHandler.class);
 
     public Void handleRequest(S3Event s3event, Context context){
-        Region region = Region.EU_CENTRAL_1;
-        s3Client = S3Client.builder().region(region).build();
-
-        this.context = context;
+        logger.debug("recieved event: " + s3event.toString());
 
         try {
             S3EventNotification.S3EventNotificationRecord record = s3event.getRecords().get(0);
@@ -36,33 +29,30 @@ public class LambdaHandler implements RequestHandler<S3Event, Void> {
             String bucketName = record.getS3().getBucket().getName();
             String fileName = record.getS3().getObject().getKey();
 
-            context.getLogger().log("Name of bucket: " + record.getS3().getBucket().getName());
-            context.getLogger().log("Name of file: " + record.getS3().getObject().getKey());
+            logger.debug("Name of bucket: " + bucketName);
+            logger.debug("Name of file: " + fileName);
 
-            s3Client.getObject(GetObjectRequest.builder().bucket(bucketName).key(fileName).build(),
-                    ResponseTransformer.toFile(Paths.get(fileName)));
+            downloadFile(bucketName, fileName);
 
         } catch (Exception e) {
-            context.getLogger().log("ERROR");
+            logger.error("Could not download file from bucket {}", e.toString());
             e.printStackTrace();
         }
 
         return null;
     }
 
-    private void readFile(String fileName) {
-        ClassLoader classLoader = getClass().getClassLoader();
-        File file = new File(classLoader.getResource(fileName).getFile());
+    private void downloadFile(String bucketName, String fileName) throws Exception {
+        File file = new File(fileName);
+        file.createNewFile();
+        TransferManager transferManager = TransferManagerBuilder.standard().build();
+        // evtl. new TransferManager(new DefaultAWSCredentialsProviderChain());
 
-        FileInputStream fis;
+        Download download = transferManager.download(bucketName, fileName, file);
+        download.waitForCompletion();
 
-        try {
-            fis = new FileInputStream(file);
-            this.context.getLogger().log("Total file size to read (in bytes) : " + fis.available());
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        logger.debug("Successfully downloaded file from bucket {}", file.getAbsolutePath());
+
+        transferManager.shutdownNow();
     }
-
 }
