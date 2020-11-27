@@ -1,0 +1,53 @@
+#!/usr/bin/groovy
+
+pipeline {
+  agent {
+    dockerfile {
+      filename 'Dockerfile'
+      reuseNode true
+    }
+  }
+  options {
+    timestamps()
+    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws_vagabundo_build']])
+    disableConcurrentBuilds()
+  }
+  environment {
+    CI = 'true'
+    AWS_ARTEFACTS = 's3://vagabundo.artefacts'
+    AWS_DEFAULT_REGION = 'eu-central-1'
+  }
+  
+  stages {    
+    stage('Test') {
+      steps {
+        sh 'npm run test'
+      }
+    }
+    
+    stage('Package') {
+      when {
+        branch 'master'
+      }
+      steps {
+        sh 'sam package --output-template-file packaged.yaml --s3-bucket ${AWS_ARTEFACTS} --s3-prefix vagabundo-backend/${BUILD_NUMBER}'
+      }
+    }
+
+    stage ('Upload') {
+      when {
+        branch 'master'
+      }
+      steps {
+        sh 'sam deploy --template-file packaged.yaml --stack-name vagabundo-backend-staging --capabilities CAPABILITY_IAM --region ${AWS_DEFAULT_REGION}'
+      }
+    }
+  }
+
+  post {
+    always {
+      deleteDir()
+    }
+  }
+}
+

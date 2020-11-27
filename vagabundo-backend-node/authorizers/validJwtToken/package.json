@@ -1,0 +1,13 @@
+{
+  "name": "vagabundo-api-gateway-authorizer",
+  "version": "0.0.1",
+  "main": "app.js",
+  "author": "senacor.com",
+  "scripts": {
+    "test": "mocha tests/unit/"
+  },
+  "dependencies": {
+    "jsonwebtoken": "8.2.1",
+    "jwks-rsa-promisified": "^1.0.2"
+  }
+}
