@@ -1,0 +1,333 @@
+swagger: "2.0"
+info:
+  version: "0.0.7"
+  title: Vagabundo
+  description: "This is the REST API for the Senacor Vagabundo app. Vagabundo shows the CO2 produced by travel and offers ways to compensate the CO2 equivalent emission."
+# during dev, should point to your local machine
+host: localhost:10010
+# basePath prefixes all resource paths 
+basePath: /
+schemes:
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /trips:
+    get:
+      summary: "List all trips"
+      operationId: "getTrips"
+      parameters: 
+      - $ref: "#/parameters/fromDateParam"
+      - $ref: "#/parameters/toDateParam"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Trip"
+        204:
+          description: "No content"
+        400:
+          description: "Invalid ID"
+        404:
+          description: "Traveller or team not found"
+          
+  /trips/travellers/{travellerBK}:
+    get:
+      summary: "Get all trips of given traveller"
+      operationId: getTripsByTraveller
+      parameters:
+      - $ref: "#/parameters/travellerBKParam"
+      - $ref: "#/parameters/fromDateParam"
+      - $ref: "#/parameters/toDateParam"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Trip"
+        204:
+          description: "No content"
+        400:
+          description: "Invalid ID"
+        404:
+          description: "Traveller not found"
+  
+  /trips/teams/{team}:
+    get:
+      summary: "Get all trips of given team"
+      operationId: getTripsByTeam
+      parameters:
+      - $ref: "#/parameters/teamParam"
+      - $ref: "#/parameters/fromDateParam"
+      - $ref: "#/parameters/toDateParam"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Trip"
+        204:
+          description: "No content"
+        404:
+          description: "Team not found"
+          
+  /trips/{tripId}:
+    get:
+      summary: "Find trip by ID"
+      description: "Returns a single trip"
+      operationId: "getTripById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "tripId"
+        in: "path"
+        description: "ID of the trip to return"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Trip"
+        400:
+          description: "Invalid ID"
+        404:
+          description: "Trip not found"
+  
+  /travellers/{travellerBK}:
+    get:
+      summary: "Return the information of a certain traveller"
+      operationId: "getTraveller"
+      parameters:
+      - $ref: "#/parameters/travellerBKParam"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/Traveller"
+        204:
+          description: "No content"
+        
+  /stats:
+    get:
+      summary: "Get statistics"
+      operationId: "getStats"
+      parameters: 
+      - $ref: "#/parameters/fromDateParam"
+      - $ref: "#/parameters/toDateParam"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/Stats"
+          
+  /stats/travellers/{travellerBK}:
+    get:
+      summary: "Return the statistics of a certain traveller"
+      operationId: "getStatsByTraveller"
+      parameters:
+      - $ref: "#/parameters/travellerBKParam"
+      - $ref: "#/parameters/fromDateParam"
+      - $ref: "#/parameters/toDateParam"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/Stats"
+        204:
+          description: "No content"
+
+  /stats/teams:
+    get:
+      summary: "Return the statistics of all teams"
+      operationId: "getTeamStats"
+      parameters: 
+      - $ref: "#/parameters/fromDateParam"
+      - $ref: "#/parameters/toDateParam"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/TeamStats"
+        204:
+          description: "No content"
+          
+  /stats/teams/{team}:
+    get:
+      summary: "Return the statistics of one team"
+      operationId: "getStatsByTeam"
+      parameters:
+      - $ref: "#/parameters/teamParam"
+      - $ref: "#/parameters/fromDateParam"
+      - $ref: "#/parameters/toDateParam"
+      responses:
+        200:
+          description: "Successful operation"
+          schema:
+            $ref: "#/definitions/Stats"
+        204:
+          description: "No content"
+
+definitions:
+  Traveller:
+    type: "object"
+    required:
+    - "firstName"
+    - "lastName"
+    - "bk"
+    properties:
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      bk:
+        type: "string"
+      team:
+        type: "string"
+        
+  Trip:
+    type: "object"
+    required:
+    - "id"
+    - "startLocation"
+    - "endLocation"
+    - "startTime"
+    - "endTime"
+    - "emission"
+    - "transport"
+    - "distance"
+    properties:
+      id:
+        type: "integer"
+      traveller:
+        $ref: "#/definitions/Traveller"
+      startLocation:
+        type: "string"
+      endLocation:
+        type: "string"
+      startTime:
+        type: "string"
+        format: "date-time"
+      endTime:
+        type: "string"
+        format: "date-time"
+      team:
+        type: "string"
+      emission:
+        $ref: "#/definitions/Emission"
+      transport:
+        $ref: "#/definitions/Transport"
+      distance:
+        type: "number"
+        
+  Transport:
+    type: "string"
+    description: "means of transportation"
+    enum:
+      - "TRAIN"
+      - "PLANE"
+      - "TAXI"
+  
+  Emission:
+    type: "object"
+    required:
+    - "co2e"
+    properties:
+      co2e:
+        type: "number"
+      compensatedCo2e:
+        type: "number"
+  
+  Elements:
+    type: "object"
+    required:
+    - "emission"
+    properties:
+      emission:
+        $ref: "#/definitions/Emission"
+      distance:
+        type: "number"
+      monetaryCo2e:
+        type: "number"
+      emissionPerCapita:
+        $ref: "#/definitions/Emission"
+      ratio:
+        $ref: "#/definitions/Ratio"
+        
+  Stats:
+    type: "object"
+    required:
+    - "total"
+    - "train"
+    - "plane"
+    - "taxi"
+    properties:
+      total:
+        $ref: "#/definitions/Elements"
+      train:
+        $ref: "#/definitions/Elements"
+      plane:
+        $ref: "#/definitions/Elements"
+      taxi:
+        $ref: "#/definitions/Elements"
+        
+  Ratio:
+    type: "object"
+    required:
+    - "value"
+    - "comment"
+    properties:
+      value:
+        type: "number"
+      comment:
+        type: "string"
+  
+  TeamStats:
+    type: "object"
+    required:
+    - "team"
+    - "stats"
+    properties:
+      team:
+        type: "string"
+      stats:
+        $ref: "#/definitions/Stats"
+        
+parameters:
+  fromDateParam:
+      name: "fromDate"
+      in: "query"
+      description: "from a certain date"
+      required: false
+      type: "string"
+      format: "date"
+  toDateParam:
+      name: "toDate"
+      in: "query"
+      description: "to a certain date"
+      required: false
+      type: "string"
+      format: "date"
+  travellerBKParam:
+      name: "travellerBK"
+      in: "path"
+      description: "traveller business key"
+      required: true
+      type: "string"
+  teamParam:
+      name: "team"
+      in: "path"
+      description: "team name"
+      required: true
+      type: "string"
