@@ -1,0 +1,10 @@
+@import "../style/variables";
+@import "../style/styles";
+
+h1 {
+  color: $primary;
+}
+
+.card-subtitle {
+  color: $gray-500;
+}

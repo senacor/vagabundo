@@ -1,0 +1,192 @@
+<div class="row">
+  <div class="col-12 mb-4">
+    <div class="card shadow-sm rounded-0 border-0">
+      <div class="card-body">
+        <h3 class="card-title">Welche Reisen werden angezeigt und ausgewertet?</h3>
+
+        <h4>Datenbasis</h4>
+        <p>Als Datengrundlage für die zurückgelegten Reisen dienen monatliche Reports von myTaxi, der Deutschen Bahn und First Travel (Flüge).
+          Die Reports enthalten alle im jeweiligen Monat über die Firmen Accounts gebuchten Reisen. Es werden also auch Reisen in der Zukunft angezeigt.
+          Sollte ein Report im Folgemonat einen Storno enthalten, wird die jeweilige Reise nachträglich wieder entfernt.
+          Selbstständig gebuchte Reisen, welche mittels Bahncard 100 oder Spendcatcher abgerechnet werden, können technisch nicht erfasst werden und werden daher von Vagabundo nicht berücksichtigt.</p>
+
+        <h4>Persönliche Reisedaten</h4>
+        <p>Reisen werden nur mit Personenbezug gespeichert, wenn eine entsprechende Einwilligung
+          (<a href="assets/Einverstaendniserklaerung.pdf" class="underline" target="_blank">Download</a>) vorliegt.
+          Zeiträume, für welche keine Einwilligung vorliegt, werden daher wie Zeiträume in denen der Nutzer
+          keine Reisen getätigt hat gewertet.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 mb-4">
+    <div class="card shadow-sm rounded-0 border-0">
+      <div class="card-body">
+        <h3 class="card-title">Wie werden die CO2-Werte berechnet?</h3>
+
+        <h4>CO2-Equivalente</h4>
+        <p>Neben CO2 entstehen durch Mobilität noch weitere Treibhausgase. Auch verursachen Emissionen in großen Höhen eine Reihe von Folgeeffekten, welche die Treibhauswirkung verstärken.
+          Um diesen Dingen Rechnung zu tragen und dennoch eine übersichtliche Darstellung zu gewährleisten, werden in Vagabundo ausschließlich CO2-Equivalente angezeigt (CO2e).
+          In den CO2e-Werten sind alle Treibhausgase und Sondereffekt berücksichtigt.</p>
+
+        <h4>Methodik</h4>
+        <p>Die angegebenen Werte wurden gemäß der Distanz Methodik des Greenhouse Gas Protocols ermittelt.<sup><a href="faq#cite-1">[1]</a></sup>
+          Dabei werden die zurückgelegten Distanzen mit einem nationalen Faktor multipliziert, um die produzierte Menge an Treibhausgasen abschätzen zu können. Die Distanzen von Taxifahrten und
+          Bahnstrecken werden mittels der Google Distance Matrix API bestimmt. Die Distanzen für Flüge ergeben sich aus der Großkreisdistanz zwischen den beiden Flughäfen zzgl. eines Aufschlages
+          von 9%, da auch Flugzeuge den Zielflughafen nicht in einer Geraden anfliegen. <sup><a href="faq#cite-2">[2]</a></sup>Dis Distanzermittlung erfolgt mittels der CarbonKit API.<sup><a href="faq#cite-3">[3]</a></sup></p>
+
+        <h4>Emissionsfaktoren</h4>
+        <p>Für Bahn- und Taxifahrten wurden die Werte 36g CO2/km und 139g CO2/km gemäß den Daten des Umweltbundesamtes zugrunde gelegt.<sup><a href="faq#cite-4">[4]</a></sup>
+          Da Senacor-Mitarbeiter für gewöhnlich 1.Klasse Bahn fahren und somit überdurchschnittlich viel Platz verbrauchen, wurde dem Bahnwert noch ein Aufschlag von 32% hinzugerechnet,
+          welcher sich aus dem Verhältnis aller ICE Wagen der 1. und 2. Klasse und der Anzahl der Sitzplätze in der 1. und 2. Klasse ergibt.<sup><a href="faq#cite-5">[5]</a></sup>
+          Flüge werden in Kurzstrecken- und Langstreckenflüge unterteilt.  Kurzstrecken werden mit 96g/km gewichtet und Langsteckenflüge mit 110g/km.<sup><a href="faq#cite-6">[6]</a></sup>
+          Da die Emission bei Flügen jedoch in größeren Höhen stattfinden, führen sie zu einer Reihe weiterer Effekte, welche die Treibhauswirkung drastisch verschärfen.
+          Diesem Effekt wird man durch einen weiteren Faktor, dem Radiation Force Index, gerecht. Das Umweltbundesamt gibt diesen mit 3-5 an.<sup><a href="faq#cite-7">[7]</a></sup> Für die hiesigen Berechnungen wurde der Faktor 3 benutzt.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12 mb-4">
+    <div class="card shadow-sm rounded-0 border-0">
+      <div class="card-body">
+        <h3 class="card-title">Woher kommen die Vergleiche?</h3>
+        <p>Für den <em>"Vergleich mit anderen Beratungen"</em> wurden Reports der Big Four herangezogen, aus welchen die Distanz pro Mitarbeiter und Verkehrsmittel hervorgeht
+          und die Emissionen mit unserer Methode berechnet.<sup>[<a href="faq#cite-8">8</a>, <a href="faq#cite-9">9</a>, <a href="faq#cite-10">10</a>, <a href="faq#cite-11">11</a>]</sup></p>
+
+        <p>Bäume binden CO2 und wandeln es in Biomasse und Sauerstoff um. Die Geschwindigkeit, in der dies geschieht, hängt maßgeblich vom Alter des Baumes ab.
+          Ein ausgewachsener Baum in Europa bindet ca. 10kg CO2 pro Jahr.<sup><a href="faq#cite-12">[12]</a></sup>
+          Anfang 2019 betrug das Restbudget an CO2-Equivalenten für das 2-Grad-Ziel noch 1120 Gigatonnen.<sup><a href="faq#cite-13">[13]</a></sup>
+          Wenn man von einer durchschnittlichen Weltbevölkerung von 8Mrd. Menschen und einer durchschnittlichen Lebenserwartung von 70 Jahren ausgeht,
+          beträgt das klimaverträgliche Jahresbudget 2000kg CO2e pro Jahr. Nach Verbrauch dieses Budgets dürfen weltweit netto keine weiteren Emissionen mehr erfolgen bzw.
+          es müssen sogar negative Emissionen erreicht werden.
+          Bei der Hühnermast wird durch Futter, Stallhaltung, Transport, etc. Treibhausgase freigesetzt. Bei der Produktion einer Huhnes werden ca. 6,25kg CO2 freigesetzt.<sup><a href="faq#cite-14">[14]</a></sup>
+        </p>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-12 mb-4">
+    <div class="card shadow-sm rounded-0 border-0">
+      <div class="card-body">
+        <h3 class="card-title">Belege</h3>
+        <ol class="references">
+          <li>
+            <span class="mw-cite-backlink"><a name="cite-1"></a></span>
+            <span class="reference-text">
+              <a rel="nofollow" class="external free" href="https://ghgprotocol.org/">GHG Protocol-Homepage</a>
+              (Abgerufen am 28. Februar 2019).
+            </span>
+          </li>
+          <li>
+            <span class="mw-cite-backlink"><a name="cite-2"></a></span>
+            <span class="reference-text">
+              <a rel="nofollow" class="external free" href="https://www.gov.uk/government/publications/2012-guidelines-to-defra-decc-s-ghg-conversion-factors-for-company-reporting-methodology-paper-for-emission-factors">
+                2012 Guidlines to Defra</a>
+              (Abgerufen am 28. Februar 2019).
+            </span>
+          </li>
+          <li>
+            <span class="mw-cite-backlink"><a name="cite-3"></a></span>
+            <span class="reference-text">
+              <a rel="nofollow" class="external free" href="https://www.carbonkit.net/categories/Great_Circle_flight_methodology">
+                CarbonKit Great Circle flight methodology</a>
+              (Abgerufen am 28. Februar 2019).
+            </span>
+          </li>
+          <li>
+            <span class="mw-cite-backlink"><a name="cite-4"></a></span>
+            <span class="reference-text">
+              <a rel="nofollow" class="external free" href="https://www.umweltbundesamt.de/themen/verkehr-laerm/emissionsdaten#verkehrsmittelvergleich_personenverkehr">
+                Umwelt Bundesamt: Emissionen im Personenverkehr</a>
+              (Abgerufen am 28. Februar 2019).
+            </span>
+          </li>
+          <li>
+            <span class="mw-cite-backlink"><a name="cite-5"></a></span>
+            <span class="reference-text">
+              <a rel="nofollow" class="external free" href="https://www.deutschebahn.com/resource/blob/1774446/455c0e001500b567cc0010d53e52cccf/Daten---Fakten-2017-data.pdf">
+                Deutsch Bahn Daten Fakten 2017</a>
+              (Abgerufen am 28. Februar 2019).
+            </span>
+          </li>
+          <li>
+            <span class="mw-cite-backlink"><a name="cite-6"></a></span>
+            <span class="reference-text">
+              <a rel="nofollow" class="external free" href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=2&cad=rja&uact=8&ved=2ahUKEwj_0q2s997gAhUH26QKHSn1C_sQFjABegQICBAC&url=https%3A%2F%2Fassets.publishing.service.gov.uk%2Fgovernment%2Fuploads%2Fsystem%2Fuploads%2Fattachment_data%2Ffile%2F69314%2Fpb13625-emission-factor-methodology-paper-110905.pdf&usg=AOvVaw3BnHGkIqFBvUV7fRHPIDPX">
+                2011 Guidelines to Defra</a>
+              (Abgerufen am 28. Februar 2019).
+            </span>
+          </li>
+          <li>
+            <span class="mw-cite-backlink"><a name="cite-7"></a></span>
+            <span class="reference-text">
+              <a rel="nofollow" class="external free" href="https://www.umweltbundesamt.de/sites/default/files/medien/377/dokumente/klimawirksamkeit_des_flugverkehrs.pdf">
+                Umweltbundesamt: Klimawirksamkeit des Flugverkehrs</a>
+              (Abgerufen am 28. Februar 2019).
+            </span>
+          </li>
+          <li>
+            <span class="mw-cite-backlink"><a name="cite-8"></a></span>
+            <span class="reference-text">
+              <a rel="nofollow" class="external free" href="https://www.pwc.de/de/corporate-responsibility/corporate-responsibility-2016-komplett.pdf">
+                PWC: Corporate Responsibility 2016</a>
+              (Abgerufen am 28. Februar 2019).
+            </span>
+          </li>
+          <li>
+            <span class="mw-cite-backlink"><a name="cite-9"></a></span>
+            <span class="reference-text">
+              <a rel="nofollow" class="external free" href="https://www.ey.com/Publication/vwLUAssets/ey-umwelterklaerung-2017/$FILE/ey-umwelterklaerung-2017.pdf">
+                EY: Umwelterklärung 2017</a>
+              (Abgerufen am 28. Februar 2019).
+            </span>
+          </li>
+          <li>
+            <span class="mw-cite-backlink"><a name="cite-10"></a></span>
+            <span class="reference-text">
+              <a rel="nofollow" class="external free" href="https://www2.deloitte.com/content/dam/Deloitte/global/Documents/About-Deloitte/gx-sustainability-report-2014-15.pdf">
+                Deloitte: Sustainability Report 2014-15</a>
+              (Abgerufen am 28. Februar 2019).</span>
+          </li>
+          <li>
+            <span class="mw-cite-backlink"><a name="cite-11"></a></span>
+            <span class="reference-text">
+              <a rel="nofollow" class="external free" href="https://home.kpmg/content/dam/kpmg/de/pdf/Themen/2018/KPMG-nachhaltigkeitsbericht-2017.pdf?__hstc=214917896.6c13b6a6c523382610a9bfad24061d5e.1550161286700.1550161286700.1550161286700.1&__hssc=214917896.1.1550161286700&__hsfp=1931902483">
+                KPMG: Nachhaltigkeitsbericht 2017</a>
+              (Abgerufen am 28. Februar 2019).
+            </span>
+          </li>
+          <li>
+            <span class="mw-cite-backlink"><a name="cite-12"></a></span>
+            <span class="reference-text">
+              <a rel="nofollow" class="external free" href="https://www.plant-for-the-planet.org/de/informieren/baeume-sind-genial-2">
+                Bäume sind genial!</a>
+              (Abgerufen am 28. Februar 2019).</span>
+          </li>
+          <li>
+            <span class="mw-cite-backlink"><a name="cite-13"></a></span>
+            <span class="reference-text">
+              <a rel="nofollow" class="external free" href="https://www.mcc-berlin.net/de/forschung/co2-budget.html">
+                So schnell tickt die CO2-Uhr</a>
+              (Abgerufen am 28. Februar 2019).</span>
+          </li>
+          <li>
+            <span class="mw-cite-backlink"><a name="cite-14"></a></span>
+            <span class="reference-text"><a rel="nofollow" class="external free" href="https://www.blitzrechner.de/fleisch/">
+              Fleisch-Rechner</a>
+              (Abgerufen am 28. Februar 2019).</span>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>

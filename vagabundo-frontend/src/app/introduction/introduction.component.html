@@ -1,0 +1,71 @@
+<ng-template #content let-modal>
+  <div class="modal-header border-0 text-light text-align d-block">
+    <h4 class="modal-title">Vagabundo</h4>
+    <h6 class="modal-subtitle">Klimaneutrale Geschäftsreisen</h6>
+  </div>
+  <div class="modal-body mb-5">
+    <ngb-carousel [showNavigationArrows]="true" [showNavigationIndicators]="true" interval="0" [wrap]="false">
+      <ng-template ngbSlide>
+        <div class="row increased-spacing">
+          <div class="col-4 text-center">
+            <fa-icon [icon]="faSuitcaseRolling" class="text-primary icon-size-bg"></fa-icon>
+            <h5 class="text-primary">Geschäftsreisen sind unvermeidbar</h5>
+            <p class="text-small">Als Berater sind wir darauf angewiesen mit Flugzeug, Bahn und Taxi zu unseren
+              Projekten zu reisen.
+              Das verursacht einen großen Ausstoß von CO2.</p>
+          </div>
+          <div class="col-4 text-center">
+            <fa-icon [icon]="faChartBar" class="text-primary icon-size-bg"></fa-icon>
+            <h5 class="text-primary">Auswertung und Aufbereitung</h5>
+            <p class="text-small">Vagabundo ermittelt die Distanzen deiner einzelnen Reisen und berechnet daraus mit
+              Hilfe des
+              <em>Greenhouse Gas Protocols</em> den CO2-Ausstoß.</p>
+          </div>
+          <div class="col-4 text-center">
+            <fa-icon [icon]="faTree" class="text-primary icon-size-bg"></fa-icon>
+            <h5 class="text-primary">Kompensation durch Zertifikate</h5>
+            <p class="text-small">Durch den Kauf von zertifizierten Emissionsreduktionen wird die entsprechende Menge
+              CO2 reduziert.</p>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template ngbSlide>
+        <div class="row increased-spacing">
+          <div class="col-4">
+            <h6 class="text-primary">Zeitraum</h6>
+            <p class="text-small">Lege einen beliebigen Zeitraum fest, für den du Auswertungen sehen willst.</p>
+            <h6 class="text-primary">Die Auswertungsebenen</h6>
+            <p class="text-small">Siehe auf den ersten Blick, wie Du, Dein CST und Senacor im Vergleich mit anderen
+              stehen.</p>
+            <h6 class="text-primary">Weitere Auswertungen</h6>
+            <p class="text-small">Durch Anwählen einer Auswertungsebene erhältst du noch mehr Informationen.</p>
+          </div>
+          <div class="col-8">
+            <img src="assets/img/screenshot.png" class="w-100">
+          </div>
+        </div>
+      </ng-template>
+      <ng-template ngbSlide>
+        <div class="row">
+          <div class="col-8 offset-2 text-center">
+            <fa-icon [icon]="faChartBar" class="text-primary icon-size-md"></fa-icon>
+            <h4 class="text-primary">Einwilligung zur Datenverarbeitung</h4>
+            <p class="text-small">Um dir Statistiken zu deinen Reisen anzeigen zu können, benötigen wir deine Erlaubnis
+              diese Daten personalisiert zu verarbeiten. Falls du bisher noch keine Einwilligung erteilt hast,
+              kannst du diese <a href="assets/Einverstaendniserklaerung.pdf" class="underline" target="_blank">
+                hier herunterladen</a> und unterschrieben Payroll zukommen lassen.
+              Die Schriftform ist aus rechtlichen Gründen zwingend notwendig. Wir werden deine
+              Einwilligung so schnell wie möglich verarbeiten und deine Reisen ab dem Zeitpunkt der Einwilligung
+              personalisiert auswerten.
+            </p>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-carousel>
+  </div>
+  <div class="modal-footer border-0">
+    <button type="button" class="btn btn-link text-primary" (click)="modal.close()">Schließen</button>
+  </div>
+</ng-template>
+
+<span></span>

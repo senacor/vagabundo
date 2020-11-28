@@ -1,0 +1,66 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@api/*":  ["../api/*"],
+
+      "@app/*": ["app/*"],
+      "@assets/*": ["assets/*"],
+      "@environments/*": ["environments/*"],
+
+      "@header/*": ["app/header/*"],
+      "@sidebar/*": ["app/sidebar/*"],
+      "@emission/*": ["app/emission/*"],
+      "@login/*": ["app/login/*"],
+      "@config/*": ["app/config/*"],
+      "@datepicker/*": ["app/datepicker/*"],
+      "@models/*": ["app/models/*"],
+
+      "@dateservice/*": ["app/services/date/*"],
+      "@authguardservice/*": ["app/services/authguard/*"],
+      "@authservice/*": ["app/services/authentication/*"],
+      "@statsselectionsevice/*": ["app/services/statsselection/*"],
+
+      "@statistics/*": ["app/statistics/*"],
+      "@overview-statistics/*": ["app/statistics/overview-statistics/*"],
+      "@company-statistics/*": ["app/statistics/company-statistics/*"],
+      "@team-statistics/*": ["app/statistics/team-statistics/*"],
+
+      "@store/actions/*": ["app/store/actions/*"],
+      "@store/models/*": ["app/store/models/*"],
+      "@store/reducers/*": ["app/store/reducers/*"],
+      "@store/selectors/*": ["app/store/selectors/*"],
+      "@store/effects/*": ["app/store/effects/*"],
+
+      "@emission-overview/*": ["app/emission-overview/*"],
+      "@treemap/*": ["app/treemap/*"],
+      "@faq/*": ["app/faq/*"],
+      "@emission-distance-chart/*": ["app/emission-distance-chart/*"],
+      "@introduction/*": ["app/introduction/*"],
+      "@start/*": ["app/start/*"],
+      "@error-message/*": ["app/error-message/*"],
+
+      "@my-emission/*": ["app/emission/my-emission/*"],
+      "@team-emission/*": ["app/emission/team-emission/*"],
+      "@company-emission/*": ["app/emission/company-emission/*"],
+
+      "@loading/*": ["app/loading/*"]
+    },
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ]
+  }
+}

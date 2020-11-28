@@ -1,0 +1,10 @@
+@import "../style/styles";
+
+.login-tooltip .tooltip-inner {
+  background-color: $senacor-green-middle;
+  max-width: 400px;
+  width: 400px;
+}
+.login-tooltip .arrow::before {
+  border-right-color: $senacor-green-middle;
+}

@@ -1,0 +1,27 @@
+@import "../style/styles";
+
+.navbar {
+  margin-left: -16px;
+  margin-right: -15px;
+}
+
+.navbar-brand {
+  margin: -.5rem 0;
+}
+
+.navbar-brand.bg-primary:hover {
+  background-color: rgba($primary, .9) !important;
+}
+.navbar-brand img {
+  width: 100%;
+  height: 3.5rem;
+}
+
+.nav-link {
+  color: $primary !important;
+  font-weight: bolder;
+}
+
+.nav-link:hover{
+  color: $secondary !important;
+}

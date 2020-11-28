@@ -1,0 +1,11 @@
+@import "../style/styles";
+@import "../style/variables";
+
+rect {
+  stroke: $white;
+}
+text {
+  font-family: $font-family-sans-serif;
+  fill: $gray-800;
+  font-size: 0.7rem;
+}
