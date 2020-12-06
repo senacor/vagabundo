@@ -6,9 +6,9 @@ Vagabundo is a business trip CO2-tracking tool for small companies. It allows em
 
 ## How it works
 To tool mainly consists of three parts
-1) The consolidation backend: A batch job that is triggered at certain times/certain events and wirtes data into the data base. This part is not included in the public code since it uses internal APIs in order to consolidate the data.
-2) The calculation backend: Different services that are triggerd on demand via the API, do calculations based on the data in the data base and return re required values.
-3) The frontend: Here the user view the statistics and can select a certain period of time.
+1) The **consolidation backend**: A batch job that is triggered at certain times/certain events and wirtes data into the data base. This part is not included in the public code since it uses internal APIs in order to consolidate the data.
+2) The **calculation backend**: Different services that are triggerd on demand via the API, do calculations based on the data in the data base and return re required values.
+3) The **frontend**: Here the user view the statistics and can select a certain period of time.
 
 ![some text](images/CloudArchitecture.png)
 
