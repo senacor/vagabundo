@@ -1,0 +1,32 @@
+#!/usr/bin/groovy
+
+pipeline {
+  agent {
+    dockerfile true
+  }
+  options {
+    timestamps()
+    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws_vagabundo_build']])
+    disableConcurrentBuilds()
+  }
+  environment {
+    HOME = '.'
+    CI = 'true'
+    AWS_ARTEFACTS = 's3://vagabundo.artefacts'
+    AWS_DEFAULT_REGION = 'eu-central-1'
+  }
+
+  stages {
+    stage('Upload') {
+      steps {
+        sh 'aws s3 cp api.yaml ${AWS_ARTEFACTS}/vagabundo-api/${BUILD_NUMBER}/'
+      }
+    }
+  }
+
+  post {
+    always {
+      deleteDir()
+    }
+  }
+}
