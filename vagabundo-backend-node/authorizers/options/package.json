@@ -1,0 +1,9 @@
+{
+  "name": "vagabundo-api-gateway-options",
+  "version": "0.0.1",
+  "main": "app.js",
+  "author": "senacor.com",
+  "scripts": {
+    "test": "mocha tests/unit/"
+  }
+}
