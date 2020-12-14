@@ -1,0 +1,17 @@
+<div class="card shadow-sm rounded-0 border-0 my-3">
+  <div class="card-body">
+    <h5 class="card-title">CO2-Emissionen der CSTs (absolut)</h5>
+    <div class="card-text">
+      <app-treemap [data]="emissionData" [colorRange]="colors"></app-treemap>
+    </div>
+  </div>
+</div>
+
+<div class="card shadow-sm rounded-0 border-0 my-3">
+  <div class="card-body">
+    <h5 class="card-title">CO2-Emissionen der CSTs (pro Kopf)</h5>
+    <div class="card-text">
+      <app-treemap [data]="emissionPerPersonData" [colorRange]="colors"></app-treemap>
+    </div>
+  </div>
+</div>

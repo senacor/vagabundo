@@ -1,0 +1,82 @@
+@import "../style/styles";
+@import "../style/variables";
+
+$train-max: $highlight-lightblue;
+$train-min: rgba(#cdf1fa, .72);
+$taxi-max: $highlight-purple;
+$taxi-min: rgba(#cdcbff, .72);
+$plane-max: $highlight-darkblue;
+$plane-min: rgba(#edf5fd, .77);
+
+svg {
+  width: 100%;
+}
+text {
+  font-family: $font-family-sans-serif;
+  fill: $gray-600;
+  font-size: 0.6rem;
+}
+
+path,
+line {
+  stroke: $gray-600;
+}
+
+rect {
+  stroke: none;
+  fill-opacity: 0.5;
+}
+rect.plane {
+  fill: url(#planeGradient);
+}
+rect.train {
+  fill: url(#trainGradient);
+}
+rect.taxi {
+  fill: url(#taxiGradient);
+}
+
+.gradient-top.train {
+  stop-color: $train-max;
+}
+.gradient-bottom.train {
+  stop-color: $train-min;
+}
+.icon.train {
+  fill: $train-max;
+}
+
+.gradient-top.taxi {
+  stop-color: $taxi-max;
+}
+.gradient-bottom.taxi {
+  stop-color: $taxi-min;
+}
+.icon.taxi {
+  fill: $taxi-max;
+}
+
+.gradient-top.plane {
+  stop-color: $plane-max;
+}
+.gradient-bottom.plane {
+  stop-color: $plane-min;
+}
+.icon.plane {
+  fill: $plane-max;
+}
+
+.icon {
+  font-family: FontAwesome;
+  font-size: 30px;
+}
+.box-label {
+  font-size: 0.8rem;
+  fill: $gray-800;
+}
+
+.axis-label {
+  text-anchor: middle;
+  font-size: 0.9rem;
+  font-weight: bold;
+}

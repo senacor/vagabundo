@@ -1,0 +1,38 @@
+@import "../style/styles";
+
+.carousel {
+  border:0 !important;
+}
+.modal-header {
+  background-image: linear-gradient(to left, $primary, $secondary);
+  text-align: center;
+}
+
+.modal-title {
+  text-transform: uppercase;
+}
+
+.modal-subtitle {
+  font-weight: 300;
+  font-size: .8rem;
+}
+
+.icon-size-bg {
+  font-size: 7rem;
+}
+.icon-size-md {
+  font-size: 4rem;
+}
+
+.row.increased-spacing div {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.text-small {
+  font-size: 0.8rem;
+}
+
+.underline {
+  text-decoration: underline;
+}

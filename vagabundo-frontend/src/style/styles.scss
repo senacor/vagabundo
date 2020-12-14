@@ -1,0 +1,50 @@
+/* You can add global styles to this file, and also import other style files */
+@import "variables";
+@import "~bootstrap/scss/bootstrap";
+
+/* This is used for the introduction to style the indicators. This should not be here, but placing
+   it inside the introduction component doesn't work because the indicators seems to be created later
+   and encapsulation is in between.
+ */
+.carousel-indicators {
+  bottom: -4rem !important;
+}
+
+.carousel-indicators li.active {
+  background-color: $primary;
+}
+
+.carousel-indicators li{
+  background-color: rgba($primary, .8);
+  width: 7px !important;
+  height: 7px !important;
+}
+.carousel-control-prev {
+  width: 40px !important;
+  margin-left: 10px;
+}
+.carousel-control-prev-icon {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%230C4650' viewBox='0 0 8 8'%3e%3cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3e%3c/svg%3e");
+}
+.carousel-control-next-icon {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%230C4650' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3e%3c/svg%3e")
+}
+.carousel-control-next {
+  width: 40px !important;
+  margin-right: 10px;
+}
+
+.carousel-item .row {
+  margin-left: 40px !important;
+  margin-right: 40px !important;
+}
+
+ngb-carousel {
+  outline: none !important;
+}

@@ -1,0 +1,10 @@
+<div class="alert alert-secondary" role="alert">
+  <div *ngIf="traveller?.team !== null">
+    Für den angegebenen Zeitraum sind leider keine Daten vorhanden
+  </div>
+
+  <div *ngIf="traveller?.team === null">
+    Es wurde keine CST-Zuordnung gefunden
+  </div>
+
+</div>

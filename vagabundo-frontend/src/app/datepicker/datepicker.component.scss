@@ -1,0 +1,30 @@
+@import "../style/styles";
+
+button {
+  color: $gray-400;
+}
+
+ngb-datepicker {
+  position: absolute;
+  z-index: 1000;
+  background-color: $white;
+}
+
+.custom-day {
+  text-align: center;
+  padding: 0.185rem 0.25rem;
+  display: inline-block;
+  height: 2rem;
+  width: 2rem;
+
+  &.focused {
+    background-color: $secondary;
+  }
+  &.range, &:hover {
+    background-color: $primary;
+    color: white;
+  }
+  &.faded {
+    background-color: rgba($primary, 0.5);
+  }
+}

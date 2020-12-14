@@ -1,0 +1,60 @@
+@import "../style/styles";
+
+.navbar-brand {
+  margin: -.5rem -1rem;
+}
+
+.navbar-brand.bg-primary:hover {
+  background-color: rgba($primary, .8) !important;
+}
+.navbar-brand img {
+  width: 100%;
+  height: 3.5rem;
+}
+
+.navbar-collapse {
+  width: 100%;
+}
+
+@include media-breakpoint-down(md) {
+  .hide-down-md {
+    display: none;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .show-down-md {
+    display: none;
+  }
+  .nav-link {
+    margin: 0 -1rem;
+    color: rgba($white, 1) !important;
+  }
+  .nav-link:hover {
+    color: rgba($white, .7) !important;
+  }
+  .nav-link.active {
+    border-left: .3rem white solid;
+    background-color: $senacor-green-middle;
+  }
+  .nav-link.level-2:not(active) {
+    padding-left: 2rem !important;
+  }
+  .nav-link.level-2.active {
+    padding-left: 1.7rem !important;
+  }
+}
+
+.dropdown-item {
+  color: rgba($white, .5) !important;
+}
+
+.dropdown-item:hover {
+  color: rgba($white, .7) !important;
+  background-color: $primary !important;
+}
+
+.nav-link {
+  padding-left: 0.5rem !important;
+  padding-right: 0.5rem !important;
+}

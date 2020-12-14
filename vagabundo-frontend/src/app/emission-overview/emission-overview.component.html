@@ -1,0 +1,52 @@
+<div class="card shadow-sm emission-overview rounded-0 border-0" [ngClass]="{'active': isIndicatorVisible}">
+  <app-loading [loading]="isLoading"></app-loading>
+  <div class="card-body" (click)="onClick()">
+    <h5 class="card-title">{{ title }}</h5>
+    <div class="card-text container">
+      <div class="row">
+        <div class="col text-center percentage compare-others">
+          <span *ngIf="comparedToOthers > 0">+</span>{{ comparedToOthers * 100 | number:'1.0-0' }}%
+        </div>
+      </div>
+      <div class="row compare-box">
+        <div class="col">
+          <span class="color-compare"></span>
+          <span class="white-spacer" style="left:0;"></span>
+          <span class="white-spacer" style="left:10%;"></span>
+          <span class="white-spacer" style="left:20%;"></span>
+          <span class="white-spacer" style="left:30%;"></span>
+          <span class="white-spacer" style="left:40%;"></span>
+          <span class="white-spacer middle"></span>
+          <span class="white-spacer" style="left:60%;"></span>
+          <span class="white-spacer" style="left:70%;"></span>
+          <span class="white-spacer" style="left:80%;"></span>
+          <span class="white-spacer" style="left:90%;"></span>
+          <span class="white-spacer" style="left:100%;"></span>
+          <span class="arrow" [ngClass]="{'positive': comparedToOthers > 0, 'negative': comparedToOthers < 0}"
+                [ngStyle]="{'width': arrowLength + '%'}">
+            <span class="line" ></span>
+            <span class="point"></span>
+          </span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col subtitle text-center mt-1">
+          <p class="mb-0">Emissionen</p>
+          <p>{{ subtitle }}</p>
+        </div>
+      </div>
+      <div class="row details">
+        <div class="col">Distanz</div>
+        <div class="col text-right">{{ distance | number:'1.0-2' }} km</div>
+      </div>
+      <div class="row details">
+        <div class="col">CO2-Emission</div>
+        <div class="col text-right">{{ emission | number:'1.0-2' }} kg</div>
+      </div>
+      <div class="row details">
+        <div class="col">Kompensation</div>
+        <div class="col text-right">{{ compensation | currency:'EUR':'symbol':'1.2-2' }}</div>
+      </div>
+    </div>
+  </div>
+</div>

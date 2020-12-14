@@ -1,0 +1,111 @@
+@import "../style/styles";
+@import "../style/variables";
+
+$arrow-grey: rgba($black, .5);
+
+.card {
+  border-bottom: #ffffff 5px solid;
+  cursor: pointer;
+}
+
+.details {
+  color: $gray-600;
+  font-size: 0.75rem;
+}
+
+.compare-others {
+  color: $primary;
+  font-size: 1.7rem;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.card-title {
+  color: $gray-800;
+}
+.subtitle {
+  color: $gray-800;
+  line-height: 0.7rem;
+  font-size: 0.7rem;
+}
+
+.compare-previous {
+  color: $gray-800;
+  font-size: 0.6rem;
+}
+
+.card.active {
+  border-bottom: 0.5rem $secondary solid !important;
+}
+
+.card.active .card-body {
+  padding-bottom: 0.75rem;
+}
+
+.row.compare-box {
+  padding-left: 15px;
+  padding-right: 15px;
+  .col {
+    padding: 0 !important;
+    height: 30px;
+    .white-spacer {
+      width: 2px;
+      height: 30px;
+      background-color: $gray-400;
+      position: absolute;
+      &.middle {
+        left: 50%;
+        background-color: #858585;
+        z-index: 100;
+      }
+    }
+    .color-compare {
+      width: 100%;
+      position: absolute;
+      top: 5px;
+      left: 2px;
+      height: 25px;
+      background-image: linear-gradient(to right, $senacor-green-light, $white, $highlight-red);
+    }
+    .arrow {
+      width: 100%;
+      position: absolute;
+      .line {
+        margin-top: 8px;
+        background: $arrow-grey;
+        height: 19px;
+        width: 100%;
+      }
+      .point {
+        width: 0;
+        height: 0;
+        margin-top: 8px;
+        position: absolute;
+        border-top: 9px solid transparent;
+        border-bottom: 10px solid transparent;
+      }
+      &.positive {
+        left: 50%;
+        .line {
+          float: left;
+        }
+        .point {
+          border-left: 2px solid $arrow-grey;
+          float: right;
+        }
+      }
+      &.negative {
+        right: 50%;
+        .line {
+          float: right;
+        }
+        .point {
+          border-right: 2px solid $arrow-grey;
+          float: left;
+          left: -2px;
+        }
+      }
+    }
+  }
+}
+
