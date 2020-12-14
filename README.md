@@ -12,4 +12,5 @@ To tool mainly consists of three parts
 
 ![some text](images/CloudArchitecture.png)
 
-
+## Participants in alphabetical order
+[Hans Homburg](https://github.com/GitHansHub), [Dirk Kirsten](https://github.com/dirkk), [Manuel Kniep](https://github.com/maaaNu) , [Yankang Li](https://github.com/iseelotus), [Olof Nord](https://github.com/olof-nord), [Florian Rudisch](https://github.com/frudisch), [David Scheer](https://github.com/DavidScheer)
