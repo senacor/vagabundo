@@ -1,0 +1,167 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  vagabundo-lambda
+
+  Sample SAM Template for vagabundo-lambda
+
+Parameters:
+  DBHostURL:
+    Type: String
+    Default: # Insert your database url here
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 3
+    Environment:
+      Variables:
+        DB_HOST: !Ref DBHostURL
+    Handler: app.lambda_handler
+    Runtime: python3.8
+    Layers:
+      - !Ref libs
+  Api:
+    Cors:
+      AllowMethods: "'OPTIONS,GET,POST,PUT,DELETE'"
+      AllowHeaders: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key'"
+      AllowOrigin: "'*'"
+      AllowCredentials: "'true'"
+
+Resources:
+  VagabundoApi:
+    Type: AWS::Serverless::Api
+    Policies:
+      - AWSXrayWriteOnlyAccess
+    Properties:
+      StageName: Prod
+      Auth:
+        Authorizers:
+          ValidJwtTokenAuthorizer:
+            FunctionArn: !GetAtt ValidJwtAuthFunction.Arn
+          ValidJwtTokenForUserAuthorizer:
+            FunctionPayloadType: REQUEST
+            FunctionArn: !GetAtt ValidJwtForUserAuthFunction.Arn
+            Identity:
+              Headers:
+                - Authorization
+
+  # authorizers
+  ValidJwtAuthFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./authorizers/validJwtToken
+      Handler: app.lambdaHandler
+      Runtime: nodejs12.x
+
+  ValidJwtForUserAuthFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ./authorizers/validJwtTokenForUser
+      Handler: app.lambdaHandler
+      Runtime: nodejs12.x
+
+  # Trips
+  TripsGetByIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: trips/get_by_id/function
+      Policies:
+        - AWSLambdaVPCAccessExecutionRole
+      VpcConfig:
+        SubnetIds:
+          - !Ref VPCSubnet1
+          - !Ref VPCSubnet2
+        SecurityGroupIds:
+          - !GetAtt VPCSecurityGroup.GroupId
+      Events:
+        TripsGetById:
+          Type: Api
+          Properties:
+            RestApiId: !Ref VagabundoApi
+            Path: /trips/{id}
+            Method: get
+            Auth:
+              Authorizer: ValidJwtTokenAuthorizer
+
+  TripsGetFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: trips/get/function
+      Policies:
+        - AWSLambdaVPCAccessExecutionRole
+      VpcConfig:
+        SubnetIds:
+          - !Ref VPCSubnet1
+          - !Ref VPCSubnet2
+        SecurityGroupIds:
+          - !GetAtt VPCSecurityGroup.GroupId
+      Events:
+        TripsGet:
+          Type: Api
+          Properties:
+            RestApiId: !Ref VagabundoApi
+            Path: /trips
+            Method: get
+            Auth:
+              Authorizer: ValidJwtTokenAuthorizer
+
+  TripsGetByTeamFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: trips/get_by_team/function
+      Policies:
+        - AWSLambdaVPCAccessExecutionRole
+      VpcConfig:
+        SubnetIds:
+          - !Ref VPCSubnet1
+          - !Ref VPCSubnet2
+        SecurityGroupIds:
+          - !GetAtt VPCSecurityGroup.GroupId
+      Events:
+        TripsGet:
+          Type: Api
+          Properties:
+            RestApiId: !Ref VagabundoApi
+            Path: /trips/teams/{teamName}
+            Method: get
+            Auth:
+              Authorizer: ValidJwtTokenAuthorizer
+
+  TripsGetByTravellerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: trips/get_by_traveller/function
+      Policies:
+        - AWSLambdaVPCAccessExecutionRole
+      VpcConfig:
+        SubnetIds:
+          - !Ref VPCSubnet1
+          - !Ref VPCSubnet2
+        SecurityGroupIds:
+          - !GetAtt VPCSecurityGroup.GroupId
+      Events:
+        TripsGet:
+          Type: Api
+          Properties:
+            RestApiId: !Ref VagabundoApi
+            Path: /trips/travellers/{travellerName}
+            Method: get
+            Auth:
+              Authorizer: ValidJwtTokenForUserAuthorizer
+
+  libs:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: libs
+      Description: Dependencies for the blank sample app.
+      ContentUri: libs/.
+      CompatibleRuntimes:
+        - python3.8
+    Metadata:
+      BuildMethod: makefile
+
+Outputs:
+  ApiURL:
+    Description: "API URL"
+    Value: !Sub 'https://${VagabundoApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/'

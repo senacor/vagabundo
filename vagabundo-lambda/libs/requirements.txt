@@ -1,0 +1,4 @@
+requests
+SQLAlchemy
+PyMySQL
+dataclasses-json
