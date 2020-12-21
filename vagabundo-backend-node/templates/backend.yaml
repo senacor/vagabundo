@@ -1,0 +1,286 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: Vagabundo Backend
+
+Parameters:
+  Env:
+    Description: The name of the environment (usually either dev, staging, prod)
+    Type: String
+    Default: 'test'
+    MinLength: 1
+    MaxLength: 10
+
+  DatabaseUser:
+    Type: String
+    Default: 'admin'
+
+  DatabasePassword:
+    Type: String
+    Default: 'hansdavid'
+    NoEcho: True
+
+  NetworkStack:
+    Description: The name of the corresponding network stack
+    Type: String
+    Default: 'vagabundo-test-network'
+
+  DatabaseStack:
+    Description: The name of the corresponding network stack
+    Type: String
+    Default: 'vagabundo-test-database'
+
+Globals:
+  Api:
+    Cors:
+      AllowMethods: "'*'"
+      AllowHeaders: "'*'"
+      AllowOrigin: "'*'"
+
+    # Always compress API response payloads
+    MinimumCompressionSize: 0
+
+    TracingEnabled: true
+
+    # Enable xray for our lambdas
+    MethodSettings: [{
+        LoggingLevel: "INFO",
+        MetricsEnabled: True,
+        DataTraceEnabled: True,
+        ResourcePath: "/*",
+        HttpMethod: "*",
+    }]
+
+  Function:
+    Timeout: 60
+    Handler: app.lambdaHandler
+    Runtime: nodejs12.x
+    Environment:
+      Variables:
+        DB_HOST:
+          Fn::ImportValue: !Sub "${DatabaseStack}-db-host"
+        DB_USER: !Ref DatabaseUser
+        DB_PASSWORD: !Ref DatabasePassword
+        BRANCH_CO2E_PER_CAPITA_PER_DAY: 7.1781
+        MONETARY_CO2E_FACTOR: 0.023
+    VpcConfig:
+      SubnetIds:
+        - Fn::ImportValue:
+            !Sub "${NetworkStack}-subnet-1"
+        - Fn::ImportValue:
+            !Sub "${NetworkStack}-subnet-2"
+        - Fn::ImportValue:
+            !Sub "${NetworkStack}-subnet-3"
+      SecurityGroupIds:
+        - !GetAtt LambdaExecutionSecurityGroup.GroupId
+
+Resources:
+
+  VagabundoApi:
+    Type: AWS::Serverless::Api
+    Policies:
+      - AWSXrayWriteOnlyAccess
+    Properties:
+      StageName: !Ref Env
+      Auth:
+        Authorizers:
+          ValidJwtTokenAuthorizer:
+            FunctionArn: !GetAtt ValidJwtAuthFunction.Arn
+          ValidJwtTokenForUserAuthorizer:
+            FunctionPayloadType: REQUEST
+            FunctionArn: !GetAtt ValidJwtForUserAuthFunction.Arn
+            Identity:
+              Headers:
+                - Authorization
+
+  ValidJwtAuthFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../authorizers/validJwtToken
+
+  ValidJwtForUserAuthFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../authorizers/validJwtTokenForUser
+
+  LambdaExecutionSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Join ['-', ['vagabundo', !Ref Env, 'lambda', 'execution']]
+      GroupDescription: !Sub "Vagabundo Lambda Execution Group (${Env})"
+      Tags:
+        - Key: Name
+          Value: !Sub "Vagabundo Lambda Execution (${Env})"
+      SecurityGroupEgress:
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: "tcp"
+          FromPort: "0"
+          ToPort: "65535"
+      SecurityGroupIngress:
+        - CidrIp: 0.0.0.0/0
+          IpProtocol: "tcp"
+          FromPort: "0"
+          ToPort: "65535"
+        - CidrIpv6: ::/0
+          IpProtocol: "tcp"
+          FromPort: "0"
+          ToPort: "65535"
+        - CidrIp:
+            Fn::ImportValue: !Sub "${NetworkStack}-vpc-cidrblock"
+          IpProtocol: "-1"
+      VpcId:
+        Fn::ImportValue: !Sub "${NetworkStack}-vpc"
+
+### /travellers/...
+
+  TravellersGetFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../travellers/
+      Policies:
+        - AWSLambdaVPCAccessExecutionRole
+      Events:
+        TravellersGet:
+          Type: Api
+          Properties:
+            RestApiId: !Ref VagabundoApi
+            Path: /travellers/{travellerName}
+            Method: get
+            Auth:
+              Authorizer: ValidJwtTokenForUserAuthorizer
+
+### /stats/...
+
+  StatsGetFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../stats/get
+      Policies:
+        - AWSLambdaVPCAccessExecutionRole
+      Events:
+        StatsGet:
+          Type: Api
+          Properties:
+            RestApiId: !Ref VagabundoApi
+            Path: /stats
+            Method: get
+            Auth:
+              Authorizer: ValidJwtTokenAuthorizer
+
+  StatsByTeamGetFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../stats/get-by-team
+      Policies:
+        - AWSLambdaVPCAccessExecutionRole
+      Events:
+        StatsByTeamGet:
+          Type: Api
+          Properties:
+            RestApiId: !Ref VagabundoApi
+            Path: /stats/teams/{teamName}
+            Method: get
+            Auth:
+              Authorizer: ValidJwtTokenAuthorizer
+
+  StatsByTravellerGetFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../stats/get-by-traveller
+      Policies:
+        - AWSLambdaVPCAccessExecutionRole
+      Events:
+        StatsByTravellerGet:
+          Type: Api
+          Properties:
+            RestApiId: !Ref VagabundoApi
+            Path: /stats/travellers/{travellerName}
+            Method: get
+            Auth:
+              Authorizer: ValidJwtTokenForUserAuthorizer
+
+  TeamStatsGetFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../stats/teams
+      Policies:
+        - AWSLambdaVPCAccessExecutionRole
+      Events:
+        StatsByTeamGet:
+          Type: Api
+          Properties:
+            RestApiId: !Ref VagabundoApi
+            Path: /stats/teams
+            Method: get
+            Auth:
+              Authorizer: ValidJwtTokenAuthorizer
+
+### /trips/...
+
+  TripsGetByIdFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../trips/get-by-id
+      Policies:
+        - AWSLambdaVPCAccessExecutionRole
+      Events:
+        TripsGetById:
+          Type: Api
+          Properties:
+            RestApiId: !Ref VagabundoApi
+            Path: /trips/{id}
+            Method: get
+            Auth:
+              Authorizer: ValidJwtTokenAuthorizer
+
+  TripsGetFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../trips/get-trips
+      Policies:
+        - AWSLambdaVPCAccessExecutionRole
+      Events:
+        TripsGet:
+          Type: Api
+          Properties:
+            RestApiId: !Ref VagabundoApi
+            Path: /trips
+            Method: get
+            Auth:
+              Authorizer: ValidJwtTokenAuthorizer
+
+  TripsGetByTeamFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../trips/get-trips-by-team
+      Policies:
+        - AWSLambdaVPCAccessExecutionRole
+      Events:
+        TripsGet:
+          Type: Api
+          Properties:
+            RestApiId: !Ref VagabundoApi
+            Path: /trips/teams/{teamName}
+            Method: get
+            Auth:
+              Authorizer: ValidJwtTokenAuthorizer
+
+  TripsGetByTravellerFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../trips/get-trips-by-traveller
+      Policies:
+        - AWSLambdaVPCAccessExecutionRole
+      Events:
+        TripsGet:
+          Type: Api
+          Properties:
+            RestApiId: !Ref VagabundoApi
+            Path: /trips/travellers/{travellerName}
+            Method: get
+            Auth:
+              Authorizer: ValidJwtTokenForUserAuthorizer
+
+Outputs:
+  ApiURL:
+    Description: "API URL"
+    Value: !Sub 'https://${VagabundoApi}.execute-api.${AWS::Region}.amazonaws.com/${Env}/'
