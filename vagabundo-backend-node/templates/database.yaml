@@ -14,12 +14,12 @@ Parameters:
     Type: String
     Default: 'vagabundo-test-network'
 
-  MasterUserName:
+  DatabaseUser:
     Description: User name of the databases' admin user
     Type: String
     Default: 'admin'
 
-  MasterUserPassword:
+  DatabasePassword:
     Description: Password of the databases' admin user
     Type: String
     Default: 'hansdavid'
@@ -48,8 +48,8 @@ Resources:
       EngineMode: serverless
       DBSubnetGroupName: !Ref SubnetGroup
       DBClusterIdentifier: !Join ['-', ['vagabundo', !Ref Env, 'database']]
-      MasterUsername: !Ref MasterUserName
-      MasterUserPassword: !Ref MasterUserPassword
+      MasterUsername: !Ref DatabaseUser
+      MasterUserPassword: !Ref DatabasePassword
       VpcSecurityGroupIds:
         - !GetAtt DatabaseSecurityGroup.GroupId
 
