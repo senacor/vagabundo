@@ -1,9 +1,6 @@
 name: Deploy Staging
 
-on:
-  push:
-    paths:
-      - 'vagabundo-backend-node'
+on: push
 
 jobs:
   staging-deploy:
