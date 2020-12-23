@@ -30,23 +30,20 @@ jobs:
           echo "::set-output name=environment::$ENVIRONMENT"
 
       - name: Prepare Network
-        uses: aws-actions/aws-cloudformation-github-deploy@master
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: vagabundo-staging-network
           template: vagabundo-backend-node/templates/network.yaml
           no-fail-on-empty-changeset: "1"
-          parameter-overrides: >-
-            Env=staging
+          parameter-overrides: "Env=staging"
 
       - name: Deploy Database
-        uses: aws-actions/aws-cloudformation-github-deploy@master
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
           name: vagabundo-staging-database
           template: vagabundo-backend-node/templates/database.yaml
           no-fail-on-empty-changeset: "1"
-          parameter-overrides: >-
-            Env=staging,
-            NetworkStack=vagabundo-staging-network
+          parameter-overrides: "Env=staging,NetworkStack=vagabundo-staging-network"
 
       - name: sam build
         uses: TractorZoom/sam-cli-action@master
