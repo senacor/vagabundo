@@ -59,7 +59,7 @@ jobs:
         uses: TractorZoom/sam-cli-action@v.0.2.0
         with:
           directory: vagabundo-backend-node/templates/
-          sam_command: "deploy --stack-name vagabundo-staging backend --s3-bucket vagabundo-staging-backend --capabilities CAPABILITY_IAM"
+          sam_command: "deploy --stack-name vagabundo-staging-backend --s3-bucket vagabundo-staging-backend --capabilities CAPABILITY_IAM"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
