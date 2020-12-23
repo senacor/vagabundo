@@ -1,15 +1,9 @@
 name: Deploy Staging
 
 on:
-  workflow_dispatch:
-    inputs:
-      region:
-        description: 'AWS Region'
-        required: true
-        default: 'eu-west-1'
-       keypair:
-        description: 'SSH Key Pair'
-        required: true
+  push:
+    paths:
+      - 'vagabundo-backend-node'
 
 jobs:
   staging-deploy:
@@ -18,42 +12,59 @@ jobs:
     outputs:
       env-name: ${{ steps.env-name.outputs.environment }}
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
-    - name: Configure AWS credentials
-      id: creds
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ github.event.inputs.region}}
+      - name: Configure AWS credentials
+        id: creds
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
-    - name: Configure environment name
-      id: env-name
-      env:
-        REPO: ${{ github.repository }}
-      run: |
-        ENVIRONMENT=`echo $REPO | tr "/" "-"`
-        echo "Environment name: $ENVIRONMENT"
-        echo "::set-output name=environment::$ENVIRONMENT"
+      - name: Configure environment name
+        id: env-name
+        env:
+          REPO: ${{ github.repository }}
+        run: |
+          ENVIRONMENT=`echo $REPO | tr "/" "-"`
+          echo "Environment name: $ENVIRONMENT"
+          echo "::set-output name=environment::$ENVIRONMENT"
 
-    - name: Prepare Network
-      uses: aws-actions/aws-cloudformation-github-deploy@master
-      with:
-        name: vagabundo-staging-network
-        template: vagabundo-backend-node/templates/network.yaml
-        no-fail-on-empty-changeset: "1"
-        parameter-overrides: >-
-          Env=staging
+      - name: Prepare Network
+        uses: aws-actions/aws-cloudformation-github-deploy@master
+        with:
+          name: vagabundo-staging-network
+          template: vagabundo-backend-node/templates/network.yaml
+          no-fail-on-empty-changeset: "1"
+          parameter-overrides: >-
+            Env=staging
 
-    - name: Deploy Database
-      uses: aws-actions/aws-cloudformation-github-deploy@master
-      with:
-        name: vagabundo-staging-database
-        template: vagabundo-backend-node/templates/database.yaml
-        no-fail-on-empty-changeset: "1"
-        parameter-overrides: >-
-          Env=staging,
-          NetworkStack=vagabundo-staging-network
+      - name: Deploy Database
+        uses: aws-actions/aws-cloudformation-github-deploy@master
+        with:
+          name: vagabundo-staging-database
+          template: vagabundo-backend-node/templates/database.yaml
+          no-fail-on-empty-changeset: "1"
+          parameter-overrides: >-
+            Env=staging,
+            NetworkStack=vagabundo-staging-network
 
+      - name: sam build
+        uses: TractorZoom/sam-cli-action@master
+        with:
+          sam_command: "build"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: sam deploy
+        uses: TractorZoom/sam-cli-action@master
+        with:
+          sam_command: "deploy"
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
