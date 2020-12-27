@@ -29,34 +29,34 @@ jobs:
       run:
         working-directory: vagabundo-frontend
 
-      steps:
-        - name: Setup Node
-          uses: actions/setup-node@v1
-          with:
-            node-version: '12.x'
+    steps:
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
 
-        - name: Check out code
-          uses: actions/checkout@v2
+      - name: Check out code
+        uses: actions/checkout@v2
 
-        - name: Install
-          run: |
-            npm install
-            npm rebuild node-sass --force
+      - name: Install
+        run: |
+          npm install
+          npm rebuild node-sass --force
 
-        - name: Build
-          run: |
-            npm run build
-            npm run build:staging
+      - name: Build
+        run: |
+          npm run build
+          npm run build:staging
 
-        - name: Test
-          run: |
-            npm run test:prod
-            npm run lint
-            npm run e2e
+      - name: Test
+        run: |
+          npm run test:prod
+          npm run lint
+          npm run e2e
 
 #         TODO: To get this working, further work is required.
-#        - name: Upload
-#          if: ${{ github.ref == 'refs/master' }}
-#          run: |
-#            aws s3 cp dist/vagabundo-frontend/ ${aws_artefacts}/vagabundo-frontend/production/${build_number} --recursive
-#            aws s3 cp dist-staging/vagabundo-frontend/ ${aws_artefacts}/vagabundo-frontend/staging/${build_number} --recursive
+#      - name: Upload
+#        if: ${{ github.ref == 'refs/master' }}
+#        run: |
+#          aws s3 cp dist/vagabundo-frontend/ ${aws_artefacts}/vagabundo-frontend/production/${build_number} --recursive
+#          aws s3 cp dist-staging/vagabundo-frontend/ ${aws_artefacts}/vagabundo-frontend/staging/${build_number} --recursive
