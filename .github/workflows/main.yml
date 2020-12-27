@@ -24,10 +24,10 @@ jobs:
 
   vagabundo-frontend:
     name: Build and test vagabundo-frontend
-      runs-on: ubuntu-latest
-      defaults:
-        run:
-          working-directory: vagabundo-frontend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: vagabundo-frontend
 
       steps:
         - name: Setup Node
