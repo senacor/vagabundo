@@ -1,4 +1,4 @@
-name: deploy vagabundo-backend to staging
+name: Vagabundo project CI pipeline
 on:
   push:
     paths:
@@ -55,7 +55,7 @@ jobs:
             npm run e2e
 
 #         TODO: To get this working, further work is required.
-#        - name: upload
+#        - name: Upload
 #          if: ${{ github.ref == 'refs/master' }}
 #          run: |
 #            aws s3 cp dist/vagabundo-frontend/ ${aws_artefacts}/vagabundo-frontend/production/${build_number} --recursive
