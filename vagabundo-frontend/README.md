@@ -1,7 +1,6 @@
 # Vagabundo Frontend
 
-Vagabundo shows the CO2 produced by travel. 
-The frontend is therefore the presentation part of the vagabundo project. Together with the backend the CO2 cost of the the persons traveling are displayed. 
+Vagabundo shows the CO2 produced by travel. The frontend is therefore the presentation part of the vagabundo project. Together with the backend the CO2 cost of the the persons traveling are displayed. 
 
 # Development Setup
 
