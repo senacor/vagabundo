@@ -1,8 +1,9 @@
-name: deploy vagabundo-backend to staging
-on: 
+name: vagabundo-backend-node CI pipeline
+on:
   push:
-    paths: 
-      - 'vagabundo-backend-node'
+    paths:
+      - 'vagabundo-backend-node/**'
+
 jobs:
   deploy_source:
     name: build and deploy lambda
