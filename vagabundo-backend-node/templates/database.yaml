@@ -1,0 +1,81 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Database configuration for Vagabundo
+
+Parameters:
+  Env:
+    Description: The name of the environment (usually either dev, staging, prod)
+    Type: String
+    Default: 'test'
+    MinLength: 1
+    MaxLength: 10
+
+  NetworkStack:
+    Description: The name of the corresponding network stack
+    Type: String
+    Default: 'vagabundo-test-network'
+
+  DatabaseUser:
+    Description: User name of the databases' admin user
+    Type: String
+    Default: 'admin'
+
+  DatabasePassword:
+    Description: Password of the databases' admin user
+    Type: String
+    Default: 'hansdavid'
+    NoEcho: true
+
+Resources:
+
+  SubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      SubnetIds:
+        - Fn::ImportValue:
+            !Sub "${NetworkStack}-subnet-1"
+        - Fn::ImportValue:
+            !Sub "${NetworkStack}-subnet-2"
+        - Fn::ImportValue:
+            !Sub "${NetworkStack}-subnet-3"
+      DBSubnetGroupDescription: RDS Subnet Group
+      DBSubnetGroupName: !Join ['-', ['vagabundo', !Ref Env, 'subnetgroup']]
+
+
+  Database:
+    Type: AWS::RDS::DBCluster
+    Properties:
+      Engine: aurora-mysql
+      EngineMode: serverless
+      DBSubnetGroupName: !Ref SubnetGroup
+      DBClusterIdentifier: !Join ['-', ['vagabundo', !Ref Env, 'database']]
+      MasterUsername: !Ref DatabaseUser
+      MasterUserPassword: !Ref DatabasePassword
+      VpcSecurityGroupIds:
+        - !GetAtt DatabaseSecurityGroup.GroupId
+
+
+  DatabaseSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupName: !Join ['-', ['vagabundo', !Ref Env, 'database', 'sg']]
+      GroupDescription: !Sub "Vagabundo Database (${Env})"
+      VpcId:
+        Fn::ImportValue: !Sub "${NetworkStack}-vpc"
+      SecurityGroupIngress:
+        - IpProtocol: 'tcp'
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp:
+            Fn::ImportValue:
+              !Sub "${NetworkStack}-vpc-cidrblock"
+
+Outputs:
+  DatabaseHost:
+    Value: !GetAtt Database.Endpoint.Address
+    Export:
+      Name: !Sub "${AWS::StackName}-db-host"
+
+  DatabaseSg:
+    Value: !Ref DatabaseSecurityGroup
+    Export:
+      Name: !Sub "${AWS::StackName}-db-sg"
