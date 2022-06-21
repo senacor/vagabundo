@@ -31,8 +31,8 @@ jobs:
           
       - name: Install dep
         run: |
+         cd vagabundo
          npm install
-         npm rebuild node-sass --force
          
       - name: CI
         run: npm ci
