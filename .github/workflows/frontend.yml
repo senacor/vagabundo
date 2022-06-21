@@ -35,13 +35,18 @@ jobs:
          npm install
          
       - name: CI
-        run: npm ci
+        run: |
+         cd vagabundo-frontend
+         npm ci
          
       - name: Build
-        run: npm run build 
+        run: |
+         cd vagabundo-frontend
+         npm run build 
         
       - name: Test
         run: |
+         cd vagabundo-frontend
          npm run test
          npm run lint
          npm run e2e
