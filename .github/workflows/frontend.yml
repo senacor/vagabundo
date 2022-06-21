@@ -34,6 +34,9 @@ jobs:
          npm install
          npm rebuild node-sass --force
          
+      - name: CI
+        run: npm ci
+         
       - name: Build
         run: npm run build 
         
