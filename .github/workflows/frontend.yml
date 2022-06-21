@@ -4,7 +4,7 @@ on:
     paths: 
       - 'vagabundo-frontend/**'
     branches: 
-     - 'master'
+     - 'refactoring/vagabundo-frontend/fix-github-pipeline'
 jobs:
   test_deploy_frontend:
     name: build and deploy frontend
