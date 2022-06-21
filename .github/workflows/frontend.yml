@@ -1,0 +1,48 @@
+name: deploy vagabundo-frontend to staging
+on: 
+  push:
+    paths: 
+      - 'vagabundo-frontend/**'
+    branches: 
+     - 'master'
+jobs:
+  test_deploy_frontend:
+    name: build and deploy frontend
+    strategy:
+      matrix:
+        node-version: [12.x]
+    runs-on: ubuntu-latest
+    steps:
+    
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws-region: sa-east-1
+    
+      - name: Checkout
+        uses: actions/checkout@v2
+       
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          
+      - name: Install dep
+        run: |
+         npm install
+         npm rebuild node-sass --force
+         
+      - name: Build
+        run: npm run build 
+        
+      - name: Test
+        run: |
+         npm run test
+         npm run lint
+         npm run e2e
+      
+      - name: Upload
+        if: success()
+        run: aws s3 sync ./dist/vagabundo-frontend s3://vagabundo.staging.frontend
