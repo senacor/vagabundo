@@ -4,8 +4,7 @@ on:
   push:
     paths: 
       - 'vagabundo-frontend/**'
-    branches: 
-     - 'refactoring/vagabundo-frontend/fix-github-pipeline'
+
 jobs:
   test_deploy_frontend:
     name: build and deploy frontend
