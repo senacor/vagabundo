@@ -44,6 +44,7 @@
     "d3": "^5.8.2",
     "dayjs": "^1.8.12",
     "ngx-cookie-service": "^2.1.0",
+    "node-sass": "^7.0.1",
     "rxjs": "~6.3.3",
     "zone.js": "~0.8.26"
   },
@@ -67,7 +68,7 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "mkdirp": "^0.5.1",
-    "ng-swagger-gen": "^1.4.3",
+    "ng-swagger-gen": "^1.8.1",
     "protractor": "~5.4.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
