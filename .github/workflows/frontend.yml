@@ -39,10 +39,10 @@ jobs:
          cd vagabundo-frontend
          npm ci
          
-    #  - name: Build
-     #   run: |
-      #   cd vagabundo-frontend
-       #  npm run build
+      - name: Build
+        run: |
+         cd vagabundo-frontend
+         npm run build
         
       - name: Test
         run: |
