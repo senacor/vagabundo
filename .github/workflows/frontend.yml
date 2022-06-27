@@ -42,7 +42,7 @@ jobs:
       - name: Build
         run: |
          cd vagabundo-frontend
-         npm run build
+         npm run build --if-present
         
       - name: Test
         run: |
