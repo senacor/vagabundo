@@ -5,7 +5,6 @@
 /dist-staging
 /tmp
 /out-tsc
-/api
 
 # dependencies
 /node_modules
