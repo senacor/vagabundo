@@ -70,7 +70,12 @@
                   "with": "src/environments/environment.staging.ts"
                 }
               ],
-              "optimization": true,
+              "optimization": {
+                "scripts": true
+              }, "styles": {
+                "minify": true,
+                "inlineCritical": false
+              },
               "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,
