@@ -62,7 +62,7 @@
     "@types/jasmine": "~3.10.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^12.11.1",
-    "aws-sdk": "^2.388.0",
+    "aws-sdk": "^2.1163.0",
     "codelyzer": "~4.5.0",
     "jasmine-core": "~4.0.0",
     "jasmine-spec-reporter": "~4.2.1",
