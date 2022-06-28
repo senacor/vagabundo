@@ -13,6 +13,9 @@ jobs:
         node-version: [12.x]
     runs-on: ubuntu-latest
     steps:
+
+      - name: Checkout
+        uses: actions/checkout@v2
     
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -21,8 +24,7 @@ jobs:
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             aws-region: eu-central-1
     
-      - name: Checkout
-        uses: actions/checkout@v2
+
        
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
