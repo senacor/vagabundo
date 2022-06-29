@@ -1,0 +1,41 @@
+name: deploy vagabundo backend to staging
+on:
+  push:
+    paths:
+      - "vagabundo-backend-node/**"
+
+jobs:
+  test_deploy_backend:
+    name: build and deploy backend
+    strategy: 
+     matrix:
+      node-version: [12.x]
+    runs-on: ubuntu-latest
+    steps:
+    
+      - uses: actions/checkout@v2
+      - uses: aws-actions/setup-sam@v1
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-cantral-1
+      # sam build 
+      - run: sam build --use-container
+
+   #run unit tests
+      - name: Test
+        run: |
+         cd vagabundo-backend-node
+         npm run test
+         
+    #deploy
+      - name: sam deploy
+        uses: TractorZoom/sam-cli-action@v.0.2.0
+        with:
+          directory: vagabundo-backend-node/templates/
+          sam_command: "deploy --stack-name vagabundo-staging-backend --s3-bucket vagabundo-staging-backend --capabilities CAPABILITY_IAM --region eu-central-1" 
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: us-east-2
