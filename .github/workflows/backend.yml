@@ -24,7 +24,7 @@ jobs:
       - name: sam build
         uses: TractorZoom/sam-cli-action@v.0.2.0
         with:
-          directory: vagabundo-backend-node/templates/
+          directory: vagabundo-backend-node/template.yml
           sam_command: "build --template-file backend.yaml"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
