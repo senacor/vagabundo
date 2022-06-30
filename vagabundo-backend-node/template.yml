@@ -11,10 +11,10 @@ Parameters:
     Default: 'vagabundo-test-database'
   DBUser:
     Type: String
-    Default: 'soufian'
+    Default: 'admin'
   DBPassword:
     Type: String
-    Default: 'password'
+    Default: 'hansdavid'
 
 Globals:
   Api:
@@ -164,7 +164,7 @@ Resources:
       VpcId: vpc-0e1a1d65
 
   # Traveller
-  TravellersGetFunction:
+  TravellersGettion:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: travellers/
