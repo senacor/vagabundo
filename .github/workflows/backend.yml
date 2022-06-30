@@ -25,6 +25,7 @@ jobs:
       - name: Test
         run: |
          cd vagabundo-backend-node
+         npm i
          npm run test
          
     #deploy
