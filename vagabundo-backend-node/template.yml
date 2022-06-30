@@ -8,13 +8,13 @@ Description: >
 Parameters:
   DBHostURL:
     Type: String
-    Default: # Insert your database url here
+    Default: 'vagabundo-test-database'
   DBUser:
     Type: String
-    Default: # Insert your database user here
+    Default: 'soufian'
   DBPassword:
     Type: String
-    Default: # Insert your database password here
+    Default: 'password'
 
 Globals:
   Api:
