@@ -12,7 +12,7 @@ import { State } from '@app/store/reducers';
 export class AppComponent implements OnInit {
   private userLoggedIn$: Observable<boolean> = this.store.pipe(select(getUserLoggedIn));
 
-  isLoggedIn: boolean;
+  isLoggedIn: boolean = true;
   title = 'Vagabundo';
 
   constructor(

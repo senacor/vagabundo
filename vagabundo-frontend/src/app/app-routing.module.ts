@@ -44,7 +44,7 @@ const routes: Routes = [
   },
   {
     path: 'start',
-    component: StartComponent
+    component: EmissionComponent
   },
   {
     path: 'login',

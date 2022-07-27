@@ -48,7 +48,7 @@ function getToDate(parameters) {
 }
 
 /**
- * Returns a HTTP response object with an appropriate header to enable CORS
+ * Returns an HTTP response object with an appropriate header to enable CORS
  * for local development. Also a convenience function to return the result.
  * @param {Number} statuscode HTTP statuscode
  * @param {String|object} text message or object which will be returned as JSON 

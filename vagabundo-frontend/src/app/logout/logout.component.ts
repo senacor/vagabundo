@@ -3,7 +3,7 @@ import { AuthenticationService } from '@authservice/authentication.service';
 import { Router } from '@angular/router';
 
 /**
- * Thius component is bound on the path `logout`, which is called by the redirect
+ * This component is bound on the path `logout`, which is called by the redirect
  * from AWS Cognito when the logout already happened.
  * So we clear our local storage from all authentication and then redirect to the start page.
  */

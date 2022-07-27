@@ -19,7 +19,7 @@ export class SidebarComponent implements OnInit {
   /** Link to cognito logout page. */
   logoutLink = environment.LOGOUT_URL;
   /** The header should not be visible if the start route is called. It means the user is not yet logged in. */
-  isVisible: boolean;
+  isVisible: boolean = true;
 
   constructor(
     private store: Store<State>
