@@ -4,7 +4,7 @@ on:
     paths:
       - "vagabundo-backend-node/**"
 
-jobs:
+jobs:         
   test_deploy_backend:
     name: test and deploy backend
     strategy: 
@@ -12,16 +12,6 @@ jobs:
       node-version: [12.x]
     runs-on: ubuntu-latest
     steps:
-          
-
-    #run unit tests
-      - name: Test
-        run: |
-         cd vagabundo-backend-node
-         npm i
-         npm run test
-         
-    #deploy
         
       - uses: actions/checkout@v2
       - uses: aws-actions/setup-sam@v1
