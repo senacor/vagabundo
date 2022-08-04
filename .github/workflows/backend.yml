@@ -21,7 +21,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-central-1
           
-      - run: sam build --use-container
 
     #run unit tests
       - name: Test
@@ -32,7 +31,6 @@ jobs:
          
     #deploy
       - name: sam deploy
-        uses: TractorZoom/sam-cli-action@v.0.2.0
         with:
           directory: vagabundo-backend-node
           sam_command: "sam --no-confirm-changeset --no-fail-on-empty-changeset deploy --stack-name vagabundo-staging-backend --s3-bucket vagabundo-staging-backend --capabilities CAPABILITY_IAM --region eu-central-1" 
