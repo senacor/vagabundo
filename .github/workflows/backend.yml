@@ -12,14 +12,6 @@ jobs:
       node-version: [12.x]
     runs-on: ubuntu-latest
     steps:
-    
-      - uses: actions/checkout@v2
-      - uses: aws-actions/setup-sam@v1
-      - uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-central-1
           
 
     #run unit tests
@@ -30,11 +22,13 @@ jobs:
          npm run test
          
     #deploy
-      - name: sam deploy
+        
+      - uses: actions/checkout@v2
+      - uses: aws-actions/setup-sam@v1
+      - uses: aws-actions/configure-aws-credentials@v1
         with:
-          directory: vagabundo-backend-node
-          sam_command: "sam --no-confirm-changeset --no-fail-on-empty-changeset deploy --stack-name vagabundo-staging-backend --s3-bucket vagabundo-staging-backend --capabilities CAPABILITY_IAM --region eu-central-1" 
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: eu-central-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-central-1
+        
+      - run: sam --no-confirm-changeset --no-fail-on-empty-changeset deploy --stack-name vagabundo-staging-backend --s3-bucket vagabundo-staging-backend --capabilities CAPABILITY_IAM --region eu-central-1
