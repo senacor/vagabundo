@@ -1,5 +1,5 @@
 <div>
-  <div [hidden]="showChart">
+  <div [hidden]="!showChart">
     <svg></svg>
   </div>
   <app-error-message *ngIf="showNoData"></app-error-message>

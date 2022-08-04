@@ -35,8 +35,10 @@ export class AuthenticationService {
     try {
       const decodedToken = this.jwtHelper.decodeToken(jwt);
       const isExpired = this.jwtHelper.isTokenExpired(jwt);
-
-      return (decodedToken !== undefined && decodedToken !== null) && decodedToken.iss === environment.iss && !isExpired;
+      console.log(decodedToken)
+      console.log(isExpired)
+      return true; //dev
+     // return (decodedToken !== undefined && decodedToken !== null) && decodedToken.iss === environment.iss && !isExpired;
     } catch (e) {
       console.error(e);
       return false;
@@ -48,7 +50,8 @@ export class AuthenticationService {
   **/
   private extractBusinessKey(userId: string): string {
      // First get everything before the @ and then remove the other part
-     return userId.split('@')[0];
+    return "soufian-najafi";   //dev
+    // return userId.split('@')[0];
   }
 
   /**

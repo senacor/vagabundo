@@ -93,7 +93,7 @@ export class EmissionDistanceChartComponent implements OnInit, OnChanges {
     };
 
     /**
-     * Adds the statistics type to the converted format iff it is valid.
+     * Adds the statistics type to the converted format if it is valid.
      * @param type transport type
      * @param icon unicode sign for the icon
      */

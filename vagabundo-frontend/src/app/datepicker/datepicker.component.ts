@@ -25,14 +25,14 @@ export class DatepickerComponent implements OnInit {
 
   private dates$: Observable<DateModel> = this.store.pipe(select(getAllDates));
   private dates: DateModel;
-  
+
   showCalendar = false;
   hoveredDate: NgbDate;
   fromDate: NgbDate;
   toDate: NgbDate;
   startDate: NgbDate;
   faCalendarWeek: IconDefinition = faCalendarWeek;
-  
+
   constructor(private store: Store<State>,
               private ngbDateAdapter: NgbDateAdapter<NgbDate>) {}
 

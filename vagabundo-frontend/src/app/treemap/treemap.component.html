@@ -1,5 +1,5 @@
 <div class="treemap-container">
-  <div [hidden]="showTreemap">
+  <div [hidden]="!showTreemap">
     <svg width="900" height="500"></svg>
   </div>
   <app-error-message *ngIf="showNoData"></app-error-message>

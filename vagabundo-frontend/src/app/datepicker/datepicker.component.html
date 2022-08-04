@@ -6,7 +6,7 @@
   </div>
 </div>
 
-<ngb-datepicker *ngIf="showCalendar" (select)="onDateSelect($event)" [dayTemplate]="rangeSelection" outsideDays="hidden"
+<ngb-datepicker *ngIf="showCalendar" (dateSelect)="onDateSelect($any($event))" [dayTemplate]="rangeSelection" outsideDays="hidden"
                 [startDate]="startDate" displayMonths="2"></ngb-datepicker>
 
 <ng-template #rangeSelection let-date let-focused="focused">

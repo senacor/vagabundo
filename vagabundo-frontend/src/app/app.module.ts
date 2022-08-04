@@ -67,55 +67,52 @@ export const INIT_API_CONFIGURATION: Provider = {
 };
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HeaderComponent,
-    SidebarComponent,
-    EmissionComponent,
-    EmissionOverviewComponent,
-    EmissionDistanceChartComponent,
-    TreemapComponent,
-    DatepickerComponent,
-    LoginComponent,
-    IntroductionComponent,
-    FaqComponent,
-    StartComponent,
-    MyEmissionComponent,
-    TeamEmissionComponent,
-    CompanyEmissionComponent,
-    LoadingComponent,
-    LogoutComponent,
-    ErrorMessageComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    NgbModule,
-    FormsModule,
-    HttpClientModule,
-    ApiModule,
-    FontAwesomeModule,
-    HttpClientModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-        whitelistedDomains: [ environment.API_BASE_PATH ]
-      }
-    }),
-    StoreModule.forRoot(reducers, { metaReducers }),
-    environment.production ? [] : StoreDevtoolsModule.instrument(),
-    EffectsModule.forRoot([TripEffects, StatEffects, TeamStatEffects, DateEffects, TravellerEffects])
-  ],
-  providers: [
-    INIT_API_CONFIGURATION,
-    { provide: NgbDatepickerConfig, useClass: DatepickerConfigService },
-    { provide: LOCALE_ID, useValue: 'de' },
-    { provide: 'Window', useValue: window },
-    CookieService
-  ],
-  entryComponents: [
-    IntroductionComponent
-  ],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        HeaderComponent,
+        SidebarComponent,
+        EmissionComponent,
+        EmissionOverviewComponent,
+        EmissionDistanceChartComponent,
+        TreemapComponent,
+        DatepickerComponent,
+        LoginComponent,
+        IntroductionComponent,
+        FaqComponent,
+        StartComponent,
+        MyEmissionComponent,
+        TeamEmissionComponent,
+        CompanyEmissionComponent,
+        LoadingComponent,
+        LogoutComponent,
+        ErrorMessageComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        NgbModule,
+        FormsModule,
+        HttpClientModule,
+        ApiModule,
+        FontAwesomeModule,
+        HttpClientModule,
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: tokenGetter,
+                whitelistedDomains: [environment.API_BASE_PATH]
+            }
+        }),
+        StoreModule.forRoot(reducers, { metaReducers }),
+        environment.production ? [] : StoreDevtoolsModule.instrument(),
+        EffectsModule.forRoot([TripEffects, StatEffects, TeamStatEffects, DateEffects, TravellerEffects])
+    ],
+    providers: [
+        INIT_API_CONFIGURATION,
+        { provide: NgbDatepickerConfig, useClass: DatepickerConfigService },
+        { provide: LOCALE_ID, useValue: 'de' },
+        { provide: 'Window', useValue: window },
+        CookieService
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {  }
