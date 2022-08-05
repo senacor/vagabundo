@@ -14,12 +14,13 @@ jobs:
     steps:
         
       - uses: actions/checkout@v2
+      - name: Directory
+        working-directory: ./vagabundo-backend-node
       - uses: aws-actions/setup-sam@v1
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-central-1
-      - run: cd vagabundo-backend-node
       - run: sam deploy --stack-name vagabundo-staging-backend --s3-bucket vagabundo-staging-backend --capabilities CAPABILITY_IAM --region eu-central-1
 
