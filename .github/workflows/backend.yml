@@ -22,5 +22,5 @@ jobs:
           aws-region: eu-central-1
       - name: Directory
         working-directory: ./vagabundo-backend-node
-      - run: sam deploy --stack-name vagabundo-staging-backend --s3-bucket vagabundo-staging-backend --capabilities CAPABILITY_IAM --region eu-central-1
+        run: sam deploy --stack-name vagabundo-staging-backend --s3-bucket vagabundo-staging-backend --capabilities CAPABILITY_IAM --region eu-central-1
 
