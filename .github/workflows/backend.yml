@@ -4,20 +4,25 @@ on:
     paths:
       - "vagabundo-backend-node/**"
 
-jobs:         
-  test_deploy_backend:
-    name: test and deploy backend
-    strategy: 
-     matrix:
-      node-version: [12.x]
+jobs:
+  deploy:
+    name: deploy
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
     steps:
-        
-      - uses: actions/checkout@v2
-      - name: AWS lambda deploy
-        uses: appleboy/lambda-action@master
-        with:
-          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws_region: eu-central-1
-          function_name: vagabundo-backend-node/stats
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: cd vagabundo-backend-node
+    - name: serverless deploy
+      uses: serverless/github-action@master
+      with:
+        args: deploy
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
