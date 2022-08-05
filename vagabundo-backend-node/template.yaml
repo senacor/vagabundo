@@ -11,7 +11,7 @@ Parameters:
     Default: 'vagabundo-test-database'
   DBUser:
     Type: String
-    Default: 'admin'
+    Default: 'snajafi'
   DBPassword:
     Type: String
     Default: 'hansdavid'
