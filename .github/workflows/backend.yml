@@ -14,11 +14,10 @@ jobs:
     steps:
         
       - uses: actions/checkout@v2
-      - uses: aws-actions/setup-sam@v1
-      - uses: aws-actions/configure-aws-credentials@v1
+      - name: AWS lambda deploy
+        uses: appleboy/lambda-action@master
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-central-1
-      - run: cd vagabundo-backend-node
-      - run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name vagabundo-staging-backend --s3-bucket vagabundo-staging-backend --capabilities CAPABILITY_IAM --region eu-central-1
+          source: vagabundo-backend-node
