@@ -21,5 +21,6 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-central-1
       - run: cd vagabundo-backend-node
+      - run: sam init
       - run: sam deploy --stack-name vagabundo-staging-backend --s3-bucket vagabundo-staging-backend --capabilities CAPABILITY_IAM --region eu-central-1
 
