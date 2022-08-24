@@ -37,8 +37,8 @@ export class AuthenticationService {
       const isExpired = this.jwtHelper.isTokenExpired(jwt);
       console.log(decodedToken)
       console.log(isExpired)
-      return true; //dev
-     // return (decodedToken !== undefined && decodedToken !== null) && decodedToken.iss === environment.iss && !isExpired;
+      return true
+      //return (decodedToken !== undefined && decodedToken !== null) && decodedToken.iss === environment.iss && !isExpired;
     } catch (e) {
       console.error(e);
       return false;
@@ -46,12 +46,13 @@ export class AuthenticationService {
   }
 
   /**
-  * returns the business key which is XYZ while the userId has the format "XYZ@senacor.com"
+  * Returns the business key which is XYZ while the userId has the format "AzureADSenacor_Firstname.Lastname@senacor.com"
   **/
   private extractBusinessKey(userId: string): string {
-     // First get everything before the @ and then remove the other part
-    return "soufian-najafi";   //dev
-    // return userId.split('@')[0];
+    const fullUserName = userId.split('@')[0].split('_')[1];
+    const firstChar = fullUserName.charAt(0);
+    const lastName = fullUserName.split('.')[1];
+    return firstChar+lastName;
   }
 
   /**

@@ -55,11 +55,13 @@ export class EmissionDistanceChartComponent implements OnInit, OnChanges {
   public showNoData = false;
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log('called')
     if (changes.stats !== undefined && changes.stats.currentValue !== undefined &&
       changes.stats.currentValue !== null) {
       this.data = this.convertData(changes.stats.currentValue);
       this.init();
       this.draw();
+      console.log('true changes')
     }
   }
 
@@ -291,7 +293,7 @@ export class EmissionDistanceChartComponent implements OnInit, OnChanges {
     this.svg.select('.x-axis-label')
       .attr('class', 'x-axis-label axis-label')
       .attr('transform',
-        'translate(' + (this.width / 2) + ' ,' + (this.height - this.margin.top + 20) + ')')
+        'translate(' + (this.width / 2) + ' ,' + (this.height - this.margin.top + 10) + ')')
       .style('text-anchor', 'middle')
       .text(this.xAxisLabel);
   }

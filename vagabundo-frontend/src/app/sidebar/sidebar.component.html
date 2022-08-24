@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-md navbar-dark bg-secondary flex-md-column flex-row"
- >
+<nav class="navbar navbar-expand-md navbar-dark bg-secondary flex-md-column flex-row">
+
   <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed"
           aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -7,9 +7,9 @@
 
   <div class="collapse navbar-collapse pt-3" [ngbCollapse]="isNavbarCollapsed">
     <!-- <ul class="navbar-nav mr-auto mt-2 mt-lg-0"> -->
-    <ul class="flex-md-column flex-row navbar-nav w-100 justify-content-between">
+    <ul class="flex-md-column flex-row navbar-nav width justify-content-between">
       <li class="nav-item hide-down-md">
-        <a class="nav-link" routerLink="/emission" >Emissionen</a>
+        <a class="nav-link" routerLink="/emission">Emissionen</a>
       </li>
       <li class="nav-item">
         <a class="nav-link level-2" routerLink="/emission" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Meine Reisen</a>

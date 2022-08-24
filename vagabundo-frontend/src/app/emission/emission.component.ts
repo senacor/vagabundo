@@ -65,6 +65,7 @@ export class EmissionComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
     this.getTraveller();
     this.getDates();
 

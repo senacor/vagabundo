@@ -42,7 +42,7 @@ export class TreemapComponent implements OnChanges {
     this.componentSelection = d3Selection.select(myElement.nativeElement);
   }
   @Input() data: TreemapData;
-  @Input() width = 900;
+  @Input() width = 1200;
   @Input() height = 500;
   @Input() colorRange: string[] = ['#059E7F', '#0C4650'];
 
