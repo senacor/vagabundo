@@ -25,14 +25,14 @@ export class DatepickerComponent implements OnInit {
 
   private dates$: Observable<DateModel> = this.store.pipe(select(getAllDates));
   private dates: DateModel;
-  
+
   showCalendar = false;
   hoveredDate: NgbDate;
   fromDate: NgbDate;
   toDate: NgbDate;
   startDate: NgbDate;
   faCalendarWeek: IconDefinition = faCalendarWeek;
-  
+
   constructor(private store: Store<State>,
               private ngbDateAdapter: NgbDateAdapter<NgbDate>) {}
 
@@ -44,6 +44,8 @@ export class DatepickerComponent implements OnInit {
   onDateSelect(date: NgbDate): void {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
+    } else if (this.fromDate && !this.toDate && date.equals(this.fromDate)){
+      this.toDate = date;
     } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
       this.toDate = date;
     } else {
