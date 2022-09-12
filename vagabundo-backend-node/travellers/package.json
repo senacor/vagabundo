@@ -5,7 +5,7 @@
   "main": "app.js",
   "author": "senacor.com",
   "dependencies": {
-    "mysql": "latest"
+    "serverless-mysql": "^1.2.1"
   },
   "scripts": {
     "test": "mocha tests/unit/"
@@ -14,7 +14,6 @@
     "chai": "^4.1.2",
     "mocha": "^5.1.1",
     "proxyquire": "^2.1.0",
-    "serverless-mysql": "^1.2.1",
     "sinon": "^7.3.1"
   }
 }

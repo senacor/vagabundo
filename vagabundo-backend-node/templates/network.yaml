@@ -1,0 +1,87 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Network configuration for Vagabundo
+
+Parameters:
+  Env:
+    Description: The name of the environment (usually either dev, staging, prod)
+    Type: String
+    Default: 'test'
+    MinLength: 1
+    MaxLength: 10
+
+  Zone1a:
+    Default: eu-central-1a
+    Type: AWS::EC2::AvailabilityZone::Name
+
+  Zone1b:
+    Default: eu-central-1b
+    Type: AWS::EC2::AvailabilityZone::Name
+
+  Zone1c:
+    Default: eu-central-1c
+    Type: AWS::EC2::AvailabilityZone::Name
+
+Resources:
+  VagabundoVPC:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 172.16.0.0/16
+      Tags:
+        - Key: Name
+          Value: !Join ['-', ['vagabundo', !Ref Env, 'vpc']]
+
+  SubnetZone1a:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: 172.16.0.0/24
+      VpcId: !Ref VagabundoVPC
+      AvailabilityZone: !Ref Zone1a
+      Tags:
+        - Key: Name
+          Value: !Join ['-', ['vagabundo', !Ref Env, 'subnet', '1a']]
+
+  SubnetZone1b:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: 172.16.1.0/24
+      VpcId: !Ref VagabundoVPC
+      AvailabilityZone: !Ref Zone1b
+      Tags:
+        - Key: Name
+          Value: !Join ['-', ['vagabundo', !Ref Env, 'subnet', '1b']]
+
+  SubnetZone1c:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: 172.16.2.0/24
+      VpcId: !Ref VagabundoVPC
+      AvailabilityZone: !Ref Zone1c
+      Tags:
+        - Key: Name
+          Value: !Join ['-', ['vagabundo', !Ref Env, 'subnet', '1c']]
+
+Outputs:
+  Subnet1:
+    Value: !Ref SubnetZone1a
+    Export:
+      Name: !Sub "${AWS::StackName}-subnet-1"
+
+  Subnet2:
+    Value: !Ref SubnetZone1b
+    Export:
+      Name: !Sub "${AWS::StackName}-subnet-2"
+
+  Subnet3:
+    Value: !Ref SubnetZone1c
+    Export:
+      Name: !Sub "${AWS::StackName}-subnet-3"
+
+  VpcId:
+    Value: !Ref VagabundoVPC
+    Export:
+      Name: !Sub "${AWS::StackName}-vpc"
+
+  VpcCidrBlock:
+    Value: !GetAtt VagabundoVPC.CidrBlock
+    Export:
+      Name: !Sub "${AWS::StackName}-vpc-cidrblock"
