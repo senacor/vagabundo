@@ -50,6 +50,7 @@ import { CompanyEmissionComponent } from '@company-emission/company-emission.com
 import { LoadingComponent } from '@loading/loading.component';
 import { ErrorMessageComponent } from '@error-message/error-message.component';
 import { LogoutComponent } from './logout/logout.component';
+import {ComparisonTileComponent} from '@emission/comparison-tile/comparison-tile.component';
 
 registerLocaleData(localeDe);
 
@@ -85,7 +86,8 @@ export const INIT_API_CONFIGURATION: Provider = {
         CompanyEmissionComponent,
         LoadingComponent,
         LogoutComponent,
-        ErrorMessageComponent
+        ErrorMessageComponent,
+        ComparisonTileComponent
     ],
     imports: [
         BrowserModule,

@@ -98,6 +98,11 @@
           "options": {
             "browserTarget": "vagabundo-frontend:build"
           },
+          "stylePreprocessorOptions": {
+            "includePaths": [
+              "src/style"
+            ]
+          },
           "configurations": {
             "production": {
               "browserTarget": "vagabundo-frontend:build:production"

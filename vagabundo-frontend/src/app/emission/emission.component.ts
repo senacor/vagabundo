@@ -1,4 +1,14 @@
-import { ApplicationRef, Component, ComponentFactoryResolver, EmbeddedViewRef, Injector, OnInit } from '@angular/core';
+import {
+  ApplicationRef,
+  Component,
+  ComponentFactoryResolver,
+  EmbeddedViewRef,
+  Injector,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -52,6 +62,10 @@ export class EmissionComponent implements OnInit {
   /** Are all statistics still loading? */
   isStatsLoading = false;
 
+  message: string;
+
+  @Output() co2e = this.companyStats?.total?.emission.co2e;
+
   constructor(
     private store: Store<State>,
     private router: Router,
@@ -61,10 +75,11 @@ export class EmissionComponent implements OnInit {
     private componentFactoryResolver: ComponentFactoryResolver,
     private appRef: ApplicationRef,
     private injector: Injector,
-    private cookie: CookieService
+    private cookie: CookieService,
   ) { }
 
   ngOnInit(): void {
+
 
     this.getTraveller();
     this.getDates();
@@ -96,7 +111,7 @@ export class EmissionComponent implements OnInit {
    * Attaches the introduction component to the HTML.
    */
   private loadIntroduction(): void {
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(IntroductionComponent);
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(IntroductionComponent);
     const componentRef = componentFactory.create(this.injector);
     this.appRef.attachView(componentRef.hostView);
 
@@ -143,6 +158,7 @@ export class EmissionComponent implements OnInit {
       fromDate: this.dates.fromDate,
       toDate: this.dates.toDate
     }));
+
   }
 
   /**

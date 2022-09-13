@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {Input, NgModule, OnInit, Output} from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { EmissionComponent } from '@emission/emission.component';
@@ -64,4 +64,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+}
