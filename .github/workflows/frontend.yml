@@ -5,6 +5,14 @@ on:
     paths: 
       - 'vagabundo-frontend/**'
 
+env:
+  BUCKET_NAME : "<example-bucket-name>"
+  AWS_REGION : "<example-aws-region>"
+
+permissions:
+  id-token: write   # This is required for requesting the JWT
+  contents: read    # This is required for actions/checkout
+
 jobs:
   test_deploy_frontend:
     name: build and deploy frontend
@@ -32,12 +40,7 @@ jobs:
       - name: Install dep
         run: |
          cd vagabundo-frontend
-         npm install --legacy-peer-deps
-         
-      - name: CI
-        run: |
-         cd vagabundo-frontend
-         npm ci
+         npm install
          
       - name: Build
         run: |
