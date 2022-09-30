@@ -14,7 +14,7 @@ permissions:
   contents: read    # This is required for actions/checkout
 
 jobs:
-  test_deploy_frontend:
+  test_frontend:
     name: build and deploy frontend
     strategy:
       matrix:
@@ -29,13 +29,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: eu-central-1
           
       - name: Install dep
         run: |
@@ -53,7 +46,19 @@ jobs:
          npm run test
          npm run lint
          npm run e2e
-      
-      - name: Upload
-        if: success()
+
+  S3PackageUpload:
+   runs-on: ubuntu-latest
+   steps:
+    - name: Git clone the repository
+      uses: actions/checkout@v3
+    - name: configure aws credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        role-to-assume: arn:aws:iam::385321346563:role/OIDC_S3-Deployment
+        role-session-name: s3-depl
+        aws-region: eu-central-1
+      # Upload a file to AWS s3
+      - name:  deploy to s3
         run: aws s3 sync ./dist/vagabundo-frontend s3://vagabundo.staging.frontend
+      
