@@ -5,10 +5,6 @@ on:
     paths: 
       - 'vagabundo-frontend/**'
 
-env:
-  BUCKET_NAME : "<example-bucket-name>"
-  AWS_REGION : "<example-aws-region>"
-
 permissions:
   id-token: write   # This is required for requesting the JWT
   contents: read    # This is required for actions/checkout
@@ -59,6 +55,6 @@ jobs:
         role-session-name: s3-depl
         aws-region: eu-central-1
       # Upload a file to AWS s3
-      - name:  deploy to s3
-        run: aws s3 sync ./dist/vagabundo-frontend s3://vagabundo.staging.frontend
+    - name:  deploy to s3
+      run: aws s3 sync ./dist/vagabundo-frontend s3://vagabundo.staging.frontend
       
