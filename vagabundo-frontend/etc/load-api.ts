@@ -1,4 +1,4 @@
-const AWS = require('aws-sdk');
+/*const AWS = require('aws-sdk');
 const mkdirp = require('mkdirp');
 
 AWS.config.loadFromPath('etc/aws-build.json');
@@ -16,4 +16,4 @@ console.log('Fetching API Contract version', apiVersion);
 s3.getObject({
   Bucket: awsBucket,
   Key: `vagabundo-api/${apiVersion}/api.yaml`
-}).createReadStream().pipe(apiFile);
+}).createReadStream().pipe(apiFile);*/
