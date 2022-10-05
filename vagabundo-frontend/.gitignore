@@ -43,4 +43,4 @@ testem.log
 .DS_Store
 Thumbs.db
 
-/vagabundo-frontend/etc
+/vagabundo-frontend/etc/aws-build.json
