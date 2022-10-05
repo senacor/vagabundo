@@ -34,10 +34,6 @@ jobs:
          cd vagabundo-frontend
          npm install --legacy-peer-deps
          
-      - name: CI
-        run: |
-         cd vagabundo-frontend
-         npm ci
          
       - name: Build
         run: |

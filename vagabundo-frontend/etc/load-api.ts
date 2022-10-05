@@ -5,7 +5,7 @@ AWS.config.loadFromPath('etc/aws-build.json');
 const apiVersion = process.env.npm_package_config_api;
 
 const s3 = new AWS.S3();
-const awsBucket = 'BUCKET_ID';
+const awsBucket = 'vagabundo.staging.frontend';
 
 mkdirp.sync('api/contracts/');
 let apiFile = require('fs')
