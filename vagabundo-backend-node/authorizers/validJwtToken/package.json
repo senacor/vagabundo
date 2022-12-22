@@ -7,7 +7,7 @@
     "test": "mocha tests/unit/"
   },
   "dependencies": {
-    "jsonwebtoken": "8.2.1",
+    "jsonwebtoken": "9.0.0",
     "jwks-rsa-promisified": "^1.0.2"
   }
 }
